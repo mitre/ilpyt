@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ilpyt.agents.ppo_agent API documentation</title>
+<meta name="description" content="An implementation of the agent from the Proximal Policy Optimization (PPO)
+algorithm. This algorithm was described in the paper &#34;Proximal Policy
+…" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ilpyt.agents.ppo_agent</code></h1>
+</header>
+<section id="section-intro">
+<p>An implementation of the agent from the Proximal Policy Optimization (PPO)
+algorithm. This algorithm was described in the paper "Proximal Policy
+Optimization Algorithms" by John Schulman, Filip Wolski, Prafulla Dhariwal,
+Alec Radford, and Oleg Klimov, and published in 2017.</p>
+<p>For more details, please refer to the paper: <a href="https://arxiv.org/abs/1707.06347">https://arxiv.org/abs/1707.06347</a></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+An implementation of the agent from the Proximal Policy Optimization (PPO) 
+algorithm. This algorithm was described in the paper &#34;Proximal Policy
+Optimization Algorithms&#34; by John Schulman, Filip Wolski, Prafulla Dhariwal, 
+Alec Radford, and Oleg Klimov, and published in 2017.
+
+For more details, please refer to the paper: https://arxiv.org/abs/1707.06347
+&#34;&#34;&#34;
+
+from typing import Dict, List, Union
+
+import numpy as np
+import torch
+import torch.nn.functional as F
+from torch.optim import Adam
+
+from ilpyt.agents.base_agent import BaseAgent
+from ilpyt.nets.base_net import BaseNetwork
+from ilpyt.utils.agent_utils import compute_target, flatten_batch
+
+
+class PPOAgent(BaseAgent):
+    def initialize(
+        self,
+        actor: Union[BaseNetwork, None] = None,
+        critic: Union[BaseNetwork, None] = None,
+        lr: float = 0.001,
+        gamma: float = 0.99,
+        clip_ratio: float = 0.2,
+        entropy_coeff: float = 0.01,
+    ) -&gt; None:
+        &#34;&#34;&#34;
+        Initialization function for the PPO agent.
+
+        Parameters
+        ----------
+        actor: BaseNetwork, default=None
+            actor network
+        critic: BaseNetwork, default=None
+            critic network
+        lr: float, default=0.001
+            learning rate
+        gamma: float, default=0.99
+            discount factor for calculating returns
+        clip_ratio: float, default=0.2
+            clipping parameter used in PPO loss function
+        entropy_coeff: float, default=0.01
+            entropy loss coefficient
+
+        Raises
+        ------
+        ValueError:
+            if `actor` or `critic` are not specified
+        &#34;&#34;&#34;
+        self.gamma = gamma
+        self.clip_ratio = clip_ratio
+        self.entropy_coeff = entropy_coeff
+        self.lr = lr
+
+        # Networks
+        if actor is None:
+            raise ValueError(
+                &#39;Please provide input value for actor. Currently set to None.&#39;
+            )
+        if critic is None:
+            raise ValueError(
+                &#39;Please provide input value for critic. Currently set to None.&#39;
+            )
+        self.actor = actor
+        self.critic = critic
+        self.nets = {&#39;actor&#39;: self.actor, &#39;critic&#39;: self.critic}
+
+        self.opt_actor = Adam(self.actor.parameters(), lr)
+        self.opt_critic = Adam(self.critic.parameters(), lr / 2)
+
+        # Track log probs
+        # Not automatically recorded by the episode runner
+        self.log_probs = []  # type: List[torch.Tensor]
+
+    @torch.no_grad()
+    def reset(self) -&gt; None:
+        &#34;&#34;&#34;
+        Reset the actor and critic layer weights and optimizers.
+        &#34;&#34;&#34;
+        # Reset actor weights
+        for layers in self.actor.children():
+            for layer in layers:
+                if hasattr(layer, &#39;reset_parameters&#39;):
+                    layer.reset_parameters()
+
+        # Reset critic weights
+        for layers in self.critic.children():
+            for layer in layers:
+                if hasattr(layer, &#39;reset_parameters&#39;):
+                    layer.reset_parameters()
+
+        # Reset optimizers
+        self.opt_actor = Adam(self.actor.parameters(), self.lr)
+        self.opt_critic = Adam(self.critic.parameters(), self.lr)
+
+    @torch.no_grad()
+    def step(self, state: torch.Tensor) -&gt; np.ndarray:
+        &#34;&#34;&#34;
+        Find best action for the given state.
+
+        Parameters
+        ----------
+        state: torch.Tensor
+            state tensor, of size (batch_size, state_shape)
+
+        Returns
+        -------
+        np.ndarray:
+            selected actions, of size (batch_size, action_shape)
+        &#34;&#34;&#34;
+        dist, actions = self.actor.get_action(state)
+        log_probs = dist.log_prob(actions)
+
+        if len(log_probs.shape) &gt; 1:  # continuous action space
+            log_probs = log_probs.sum(axis=-1)
+        self.log_probs.append(log_probs)
+
+        if self.device == &#39;gpu&#39;:
+            actions = actions.cpu().numpy()
+        else:
+            actions = actions.numpy()
+        return actions
+
+    def update(self, batch: Dict[str, torch.Tensor]) -&gt; Dict[str, float]:
+        &#34;&#34;&#34;
+        Update agent policy based on batch of experiences.
+
+        Parameters
+        ----------
+        batch: Dict[str, torch.Tensor]
+            batch of transitions, with keys `states`, `actions`, `rewards`, 
+            `next_state`, and `dones`. Values should be of size 
+            (num_steps, num_env, item_shape)
+
+        Returns
+        -------
+        Dict[str, float]:
+            losses for the update step, key strings and loss values can be 
+            automatically recorded to TensorBoard
+        &#34;&#34;&#34;
+        # Update critic
+        final_states = batch[&#39;next_states&#39;][-1]
+        value_final = self.critic(final_states).squeeze()
+        targets = compute_target(
+            value_final, batch[&#39;rewards&#39;], 1 - batch[&#39;dones&#39;], self.gamma
+        ).reshape(-1)
+
+        if self.device == &#39;gpu&#39;:
+            targets = targets.cuda()
+
+        batch = flatten_batch(batch)
+        values = self.critic(batch[&#39;states&#39;]).squeeze()
+        advantages = targets - values
+        advantages = (advantages - advantages.mean()) / (
+            advantages.std() + 1e-8
+        )
+
+        loss_critic = F.smooth_l1_loss(values, targets)
+        self.opt_critic.zero_grad()
+        loss_critic.backward()
+        torch.nn.utils.clip_grad_norm_(self.critic.parameters(), 1.5)
+        self.opt_critic.step()
+
+        # Update actor
+        dist, _ = self.actor.get_action(batch[&#39;states&#39;])
+        log_action_probs = dist.log_prob(batch[&#39;actions&#39;])
+        if len(log_action_probs.shape) &gt; 1:
+            log_action_probs = log_action_probs.sum(axis=-1)
+        if len(self.log_probs[0].shape) != 0:
+            old_log_action_probs = torch.cat(self.log_probs)
+        else:
+            old_log_action_probs = torch.tensor(self.log_probs)
+        if self.device == &#39;gpu&#39;:
+            old_log_action_probs = old_log_action_probs.cuda()
+
+        ratio = torch.exp(log_action_probs - old_log_action_probs.detach())
+        clipped_advantages = (
+            torch.clamp(ratio, 1 - self.clip_ratio, 1 + self.clip_ratio)
+            * advantages.detach()
+        )
+
+        # Compute losses
+        loss_entropy = self.entropy_coeff * dist.entropy().mean()
+        loss_action = -(
+            torch.min(ratio * advantages.detach(), clipped_advantages)
+        ).mean()
+        loss_actor = loss_action - loss_entropy
+
+        # Updates
+        self.opt_actor.zero_grad()
+        loss_actor.backward(retain_graph=True)
+        torch.nn.utils.clip_grad_norm_(self.actor.parameters(), 1.5)
+        self.opt_actor.step()
+
+        # Reset log_probs
+        self.log_probs = []
+
+        # Return loss dictionary
+        loss_dict = {
+            &#39;loss/actor&#39;: loss_actor.item(),
+            &#39;loss/critic&#39;: loss_critic.item(),
+            &#39;loss/total&#39;: loss_actor.item() + loss_critic.item(),
+        }
+        return loss_dict</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ilpyt.agents.ppo_agent.PPOAgent"><code class="flex name class">
+<span>class <span class="ident">PPOAgent</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>By default, the agent will be in <code>train</code> mode and be configured to use
+the <code>cpu</code> for <code>step</code> and <code>update</code> calls.</p>
+<h2 id="parameters">Parameters</h2>
+<p>**kwargs:
+arbitrary keyword arguments that will be passed to the <code>initialize</code> function</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PPOAgent(BaseAgent):
+    def initialize(
+        self,
+        actor: Union[BaseNetwork, None] = None,
+        critic: Union[BaseNetwork, None] = None,
+        lr: float = 0.001,
+        gamma: float = 0.99,
+        clip_ratio: float = 0.2,
+        entropy_coeff: float = 0.01,
+    ) -&gt; None:
+        &#34;&#34;&#34;
+        Initialization function for the PPO agent.
+
+        Parameters
+        ----------
+        actor: BaseNetwork, default=None
+            actor network
+        critic: BaseNetwork, default=None
+            critic network
+        lr: float, default=0.001
+            learning rate
+        gamma: float, default=0.99
+            discount factor for calculating returns
+        clip_ratio: float, default=0.2
+            clipping parameter used in PPO loss function
+        entropy_coeff: float, default=0.01
+            entropy loss coefficient
+
+        Raises
+        ------
+        ValueError:
+            if `actor` or `critic` are not specified
+        &#34;&#34;&#34;
+        self.gamma = gamma
+        self.clip_ratio = clip_ratio
+        self.entropy_coeff = entropy_coeff
+        self.lr = lr
+
+        # Networks
+        if actor is None:
+            raise ValueError(
+                &#39;Please provide input value for actor. Currently set to None.&#39;
+            )
+        if critic is None:
+            raise ValueError(
+                &#39;Please provide input value for critic. Currently set to None.&#39;
+            )
+        self.actor = actor
+        self.critic = critic
+        self.nets = {&#39;actor&#39;: self.actor, &#39;critic&#39;: self.critic}
+
+        self.opt_actor = Adam(self.actor.parameters(), lr)
+        self.opt_critic = Adam(self.critic.parameters(), lr / 2)
+
+        # Track log probs
+        # Not automatically recorded by the episode runner
+        self.log_probs = []  # type: List[torch.Tensor]
+
+    @torch.no_grad()
+    def reset(self) -&gt; None:
+        &#34;&#34;&#34;
+        Reset the actor and critic layer weights and optimizers.
+        &#34;&#34;&#34;
+        # Reset actor weights
+        for layers in self.actor.children():
+            for layer in layers:
+                if hasattr(layer, &#39;reset_parameters&#39;):
+                    layer.reset_parameters()
+
+        # Reset critic weights
+        for layers in self.critic.children():
+            for layer in layers:
+                if hasattr(layer, &#39;reset_parameters&#39;):
+                    layer.reset_parameters()
+
+        # Reset optimizers
+        self.opt_actor = Adam(self.actor.parameters(), self.lr)
+        self.opt_critic = Adam(self.critic.parameters(), self.lr)
+
+    @torch.no_grad()
+    def step(self, state: torch.Tensor) -&gt; np.ndarray:
+        &#34;&#34;&#34;
+        Find best action for the given state.
+
+        Parameters
+        ----------
+        state: torch.Tensor
+            state tensor, of size (batch_size, state_shape)
+
+        Returns
+        -------
+        np.ndarray:
+            selected actions, of size (batch_size, action_shape)
+        &#34;&#34;&#34;
+        dist, actions = self.actor.get_action(state)
+        log_probs = dist.log_prob(actions)
+
+        if len(log_probs.shape) &gt; 1:  # continuous action space
+            log_probs = log_probs.sum(axis=-1)
+        self.log_probs.append(log_probs)
+
+        if self.device == &#39;gpu&#39;:
+            actions = actions.cpu().numpy()
+        else:
+            actions = actions.numpy()
+        return actions
+
+    def update(self, batch: Dict[str, torch.Tensor]) -&gt; Dict[str, float]:
+        &#34;&#34;&#34;
+        Update agent policy based on batch of experiences.
+
+        Parameters
+        ----------
+        batch: Dict[str, torch.Tensor]
+            batch of transitions, with keys `states`, `actions`, `rewards`, 
+            `next_state`, and `dones`. Values should be of size 
+            (num_steps, num_env, item_shape)
+
+        Returns
+        -------
+        Dict[str, float]:
+            losses for the update step, key strings and loss values can be 
+            automatically recorded to TensorBoard
+        &#34;&#34;&#34;
+        # Update critic
+        final_states = batch[&#39;next_states&#39;][-1]
+        value_final = self.critic(final_states).squeeze()
+        targets = compute_target(
+            value_final, batch[&#39;rewards&#39;], 1 - batch[&#39;dones&#39;], self.gamma
+        ).reshape(-1)
+
+        if self.device == &#39;gpu&#39;:
+            targets = targets.cuda()
+
+        batch = flatten_batch(batch)
+        values = self.critic(batch[&#39;states&#39;]).squeeze()
+        advantages = targets - values
+        advantages = (advantages - advantages.mean()) / (
+            advantages.std() + 1e-8
+        )
+
+        loss_critic = F.smooth_l1_loss(values, targets)
+        self.opt_critic.zero_grad()
+        loss_critic.backward()
+        torch.nn.utils.clip_grad_norm_(self.critic.parameters(), 1.5)
+        self.opt_critic.step()
+
+        # Update actor
+        dist, _ = self.actor.get_action(batch[&#39;states&#39;])
+        log_action_probs = dist.log_prob(batch[&#39;actions&#39;])
+        if len(log_action_probs.shape) &gt; 1:
+            log_action_probs = log_action_probs.sum(axis=-1)
+        if len(self.log_probs[0].shape) != 0:
+            old_log_action_probs = torch.cat(self.log_probs)
+        else:
+            old_log_action_probs = torch.tensor(self.log_probs)
+        if self.device == &#39;gpu&#39;:
+            old_log_action_probs = old_log_action_probs.cuda()
+
+        ratio = torch.exp(log_action_probs - old_log_action_probs.detach())
+        clipped_advantages = (
+            torch.clamp(ratio, 1 - self.clip_ratio, 1 + self.clip_ratio)
+            * advantages.detach()
+        )
+
+        # Compute losses
+        loss_entropy = self.entropy_coeff * dist.entropy().mean()
+        loss_action = -(
+            torch.min(ratio * advantages.detach(), clipped_advantages)
+        ).mean()
+        loss_actor = loss_action - loss_entropy
+
+        # Updates
+        self.opt_actor.zero_grad()
+        loss_actor.backward(retain_graph=True)
+        torch.nn.utils.clip_grad_norm_(self.actor.parameters(), 1.5)
+        self.opt_actor.step()
+
+        # Reset log_probs
+        self.log_probs = []
+
+        # Return loss dictionary
+        loss_dict = {
+            &#39;loss/actor&#39;: loss_actor.item(),
+            &#39;loss/critic&#39;: loss_critic.item(),
+            &#39;loss/total&#39;: loss_actor.item() + loss_critic.item(),
+        }
+        return loss_dict</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ilpyt.agents.base_agent.BaseAgent" href="base_agent.html#ilpyt.agents.base_agent.BaseAgent">BaseAgent</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ilpyt.agents.ppo_agent.PPOAgent.initialize"><code class="name flex">
+<span>def <span class="ident">initialize</span></span>(<span>self, actor: Union[<a title="ilpyt.nets.base_net.BaseNetwork" href="../nets/base_net.html#ilpyt.nets.base_net.BaseNetwork">BaseNetwork</a>, NoneType] = None, critic: Union[<a title="ilpyt.nets.base_net.BaseNetwork" href="../nets/base_net.html#ilpyt.nets.base_net.BaseNetwork">BaseNetwork</a>, NoneType] = None, lr: float = 0.001, gamma: float = 0.99, clip_ratio: float = 0.2, entropy_coeff: float = 0.01) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Initialization function for the PPO agent.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>actor</code></strong> :&ensp;<code>BaseNetwork</code>, default=<code>None</code></dt>
+<dd>actor network</dd>
+<dt><strong><code>critic</code></strong> :&ensp;<code>BaseNetwork</code>, default=<code>None</code></dt>
+<dd>critic network</dd>
+<dt><strong><code>lr</code></strong> :&ensp;<code>float</code>, default=<code>0.001</code></dt>
+<dd>learning rate</dd>
+<dt><strong><code>gamma</code></strong> :&ensp;<code>float</code>, default=<code>0.99</code></dt>
+<dd>discount factor for calculating returns</dd>
+<dt><strong><code>clip_ratio</code></strong> :&ensp;<code>float</code>, default=<code>0.2</code></dt>
+<dd>clipping parameter used in PPO loss function</dd>
+<dt><strong><code>entropy_coeff</code></strong> :&ensp;<code>float</code>, default=<code>0.01</code></dt>
+<dd>entropy loss coefficient</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>if <code>actor</code> or <code>critic</code> are not specified</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def initialize(
+    self,
+    actor: Union[BaseNetwork, None] = None,
+    critic: Union[BaseNetwork, None] = None,
+    lr: float = 0.001,
+    gamma: float = 0.99,
+    clip_ratio: float = 0.2,
+    entropy_coeff: float = 0.01,
+) -&gt; None:
+    &#34;&#34;&#34;
+    Initialization function for the PPO agent.
+
+    Parameters
+    ----------
+    actor: BaseNetwork, default=None
+        actor network
+    critic: BaseNetwork, default=None
+        critic network
+    lr: float, default=0.001
+        learning rate
+    gamma: float, default=0.99
+        discount factor for calculating returns
+    clip_ratio: float, default=0.2
+        clipping parameter used in PPO loss function
+    entropy_coeff: float, default=0.01
+        entropy loss coefficient
+
+    Raises
+    ------
+    ValueError:
+        if `actor` or `critic` are not specified
+    &#34;&#34;&#34;
+    self.gamma = gamma
+    self.clip_ratio = clip_ratio
+    self.entropy_coeff = entropy_coeff
+    self.lr = lr
+
+    # Networks
+    if actor is None:
+        raise ValueError(
+            &#39;Please provide input value for actor. Currently set to None.&#39;
+        )
+    if critic is None:
+        raise ValueError(
+            &#39;Please provide input value for critic. Currently set to None.&#39;
+        )
+    self.actor = actor
+    self.critic = critic
+    self.nets = {&#39;actor&#39;: self.actor, &#39;critic&#39;: self.critic}
+
+    self.opt_actor = Adam(self.actor.parameters(), lr)
+    self.opt_critic = Adam(self.critic.parameters(), lr / 2)
+
+    # Track log probs
+    # Not automatically recorded by the episode runner
+    self.log_probs = []  # type: List[torch.Tensor]</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.agents.ppo_agent.PPOAgent.reset"><code class="name flex">
+<span>def <span class="ident">reset</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reset the actor and critic layer weights and optimizers.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@torch.no_grad()
+def reset(self) -&gt; None:
+    &#34;&#34;&#34;
+    Reset the actor and critic layer weights and optimizers.
+    &#34;&#34;&#34;
+    # Reset actor weights
+    for layers in self.actor.children():
+        for layer in layers:
+            if hasattr(layer, &#39;reset_parameters&#39;):
+                layer.reset_parameters()
+
+    # Reset critic weights
+    for layers in self.critic.children():
+        for layer in layers:
+            if hasattr(layer, &#39;reset_parameters&#39;):
+                layer.reset_parameters()
+
+    # Reset optimizers
+    self.opt_actor = Adam(self.actor.parameters(), self.lr)
+    self.opt_critic = Adam(self.critic.parameters(), self.lr)</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.agents.ppo_agent.PPOAgent.step"><code class="name flex">
+<span>def <span class="ident">step</span></span>(<span>self, state: torch.Tensor) ‑> numpy.ndarray</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Find best action for the given state.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>state</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>state tensor, of size (batch_size, state_shape)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>np.ndarray:</code></dt>
+<dd>selected actions, of size (batch_size, action_shape)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@torch.no_grad()
+def step(self, state: torch.Tensor) -&gt; np.ndarray:
+    &#34;&#34;&#34;
+    Find best action for the given state.
+
+    Parameters
+    ----------
+    state: torch.Tensor
+        state tensor, of size (batch_size, state_shape)
+
+    Returns
+    -------
+    np.ndarray:
+        selected actions, of size (batch_size, action_shape)
+    &#34;&#34;&#34;
+    dist, actions = self.actor.get_action(state)
+    log_probs = dist.log_prob(actions)
+
+    if len(log_probs.shape) &gt; 1:  # continuous action space
+        log_probs = log_probs.sum(axis=-1)
+    self.log_probs.append(log_probs)
+
+    if self.device == &#39;gpu&#39;:
+        actions = actions.cpu().numpy()
+    else:
+        actions = actions.numpy()
+    return actions</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.agents.ppo_agent.PPOAgent.update"><code class="name flex">
+<span>def <span class="ident">update</span></span>(<span>self, batch: Dict[str, torch.Tensor]) ‑> Dict[str, float]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Update agent policy based on batch of experiences.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>batch</code></strong> :&ensp;<code>Dict[str, torch.Tensor]</code></dt>
+<dd>batch of transitions, with keys <code>states</code>, <code>actions</code>, <code>rewards</code>,
+<code>next_state</code>, and <code>dones</code>. Values should be of size
+(num_steps, num_env, item_shape)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Dict[str, float]:</code></dt>
+<dd>losses for the update step, key strings and loss values can be
+automatically recorded to TensorBoard</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update(self, batch: Dict[str, torch.Tensor]) -&gt; Dict[str, float]:
+    &#34;&#34;&#34;
+    Update agent policy based on batch of experiences.
+
+    Parameters
+    ----------
+    batch: Dict[str, torch.Tensor]
+        batch of transitions, with keys `states`, `actions`, `rewards`, 
+        `next_state`, and `dones`. Values should be of size 
+        (num_steps, num_env, item_shape)
+
+    Returns
+    -------
+    Dict[str, float]:
+        losses for the update step, key strings and loss values can be 
+        automatically recorded to TensorBoard
+    &#34;&#34;&#34;
+    # Update critic
+    final_states = batch[&#39;next_states&#39;][-1]
+    value_final = self.critic(final_states).squeeze()
+    targets = compute_target(
+        value_final, batch[&#39;rewards&#39;], 1 - batch[&#39;dones&#39;], self.gamma
+    ).reshape(-1)
+
+    if self.device == &#39;gpu&#39;:
+        targets = targets.cuda()
+
+    batch = flatten_batch(batch)
+    values = self.critic(batch[&#39;states&#39;]).squeeze()
+    advantages = targets - values
+    advantages = (advantages - advantages.mean()) / (
+        advantages.std() + 1e-8
+    )
+
+    loss_critic = F.smooth_l1_loss(values, targets)
+    self.opt_critic.zero_grad()
+    loss_critic.backward()
+    torch.nn.utils.clip_grad_norm_(self.critic.parameters(), 1.5)
+    self.opt_critic.step()
+
+    # Update actor
+    dist, _ = self.actor.get_action(batch[&#39;states&#39;])
+    log_action_probs = dist.log_prob(batch[&#39;actions&#39;])
+    if len(log_action_probs.shape) &gt; 1:
+        log_action_probs = log_action_probs.sum(axis=-1)
+    if len(self.log_probs[0].shape) != 0:
+        old_log_action_probs = torch.cat(self.log_probs)
+    else:
+        old_log_action_probs = torch.tensor(self.log_probs)
+    if self.device == &#39;gpu&#39;:
+        old_log_action_probs = old_log_action_probs.cuda()
+
+    ratio = torch.exp(log_action_probs - old_log_action_probs.detach())
+    clipped_advantages = (
+        torch.clamp(ratio, 1 - self.clip_ratio, 1 + self.clip_ratio)
+        * advantages.detach()
+    )
+
+    # Compute losses
+    loss_entropy = self.entropy_coeff * dist.entropy().mean()
+    loss_action = -(
+        torch.min(ratio * advantages.detach(), clipped_advantages)
+    ).mean()
+    loss_actor = loss_action - loss_entropy
+
+    # Updates
+    self.opt_actor.zero_grad()
+    loss_actor.backward(retain_graph=True)
+    torch.nn.utils.clip_grad_norm_(self.actor.parameters(), 1.5)
+    self.opt_actor.step()
+
+    # Reset log_probs
+    self.log_probs = []
+
+    # Return loss dictionary
+    loss_dict = {
+        &#39;loss/actor&#39;: loss_actor.item(),
+        &#39;loss/critic&#39;: loss_critic.item(),
+        &#39;loss/total&#39;: loss_actor.item() + loss_critic.item(),
+    }
+    return loss_dict</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="ilpyt.agents.base_agent.BaseAgent" href="base_agent.html#ilpyt.agents.base_agent.BaseAgent">BaseAgent</a></b></code>:
+<ul class="hlist">
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.load" href="base_agent.html#ilpyt.agents.base_agent.BaseAgent.load">load</a></code></li>
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.save" href="base_agent.html#ilpyt.agents.base_agent.BaseAgent.save">save</a></code></li>
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.set_test" href="base_agent.html#ilpyt.agents.base_agent.BaseAgent.set_test">set_test</a></code></li>
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.set_train" href="base_agent.html#ilpyt.agents.base_agent.BaseAgent.set_train">set_train</a></code></li>
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.to_cpu" href="base_agent.html#ilpyt.agents.base_agent.BaseAgent.to_cpu">to_cpu</a></code></li>
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.to_gpu" href="base_agent.html#ilpyt.agents.base_agent.BaseAgent.to_gpu">to_gpu</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ilpyt.agents" href="index.html">ilpyt.agents</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ilpyt.agents.ppo_agent.PPOAgent" href="#ilpyt.agents.ppo_agent.PPOAgent">PPOAgent</a></code></h4>
+<ul class="">
+<li><code><a title="ilpyt.agents.ppo_agent.PPOAgent.initialize" href="#ilpyt.agents.ppo_agent.PPOAgent.initialize">initialize</a></code></li>
+<li><code><a title="ilpyt.agents.ppo_agent.PPOAgent.reset" href="#ilpyt.agents.ppo_agent.PPOAgent.reset">reset</a></code></li>
+<li><code><a title="ilpyt.agents.ppo_agent.PPOAgent.step" href="#ilpyt.agents.ppo_agent.PPOAgent.step">step</a></code></li>
+<li><code><a title="ilpyt.agents.ppo_agent.PPOAgent.update" href="#ilpyt.agents.ppo_agent.PPOAgent.update">update</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

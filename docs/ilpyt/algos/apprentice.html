@@ -1,0 +1,1406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ilpyt.algos.apprentice API documentation</title>
+<meta name="description" content="An implementation of the Apprenticeship Learning (AppL) algorithm. This
+algorithm was described in the paper &#34;Apprenticeship Learning via Inverse
+…" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ilpyt.algos.apprentice</code></h1>
+</header>
+<section id="section-intro">
+<p>An implementation of the Apprenticeship Learning (AppL) algorithm. This
+algorithm was described in the paper "Apprenticeship Learning via Inverse
+Reinforcement Learning" by Pieter Abbeel and Andrew Ng, and presented at ICML
+2004.</p>
+<p>For more details, please refer to the paper: <a href="https://ai.stanford.edu/~ang/papers/icml04-apprentice.pdf">https://ai.stanford.edu/~ang/papers/icml04-apprentice.pdf</a></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+An implementation of the Apprenticeship Learning (AppL) algorithm. This 
+algorithm was described in the paper &#34;Apprenticeship Learning via Inverse 
+Reinforcement Learning&#34; by Pieter Abbeel and Andrew Ng, and presented at ICML 
+2004.
+
+For more details, please refer to the paper: https://ai.stanford.edu/~ang/papers/icml04-apprentice.pdf
+&#34;&#34;&#34;
+
+import logging
+import pickle
+from typing import List, Tuple
+
+import numpy as np
+import torch
+
+from ilpyt.agents.a2c_agent import A2CAgent
+from ilpyt.agents.base_agent import BaseAgent
+from ilpyt.agents.dqn_agent import DQNAgent
+from ilpyt.agents.ppo_agent import PPOAgent
+from ilpyt.algos.base_algo import BaseAlgorithm
+from ilpyt.envs.vec_env import VecEnv
+from ilpyt.runners.runner import Runner
+
+
+class Apprentice(BaseAlgorithm):
+    def initialize(
+        self,
+        env: VecEnv,
+        agent: BaseAgent,
+        save_path: str = &#39;logs&#39;,
+        load_path: str = &#39;&#39;,
+        use_gpu: bool = True,
+    ) -&gt; None:
+        &#34;&#34;&#34;
+        Initialization function for the AppL algorithm.
+
+        Parameters
+        ----------
+        env: VecEnv
+            vectorized OpenAI Gym environment
+        agent: BaseAgent
+            agent for train and/or test. Must be an RL Agent
+        save_path: str, default=&#39;logs&#39;
+            path to directory to save network weights
+        load_path: str, default=&#39;&#39;
+            path to directory to load network weights. If not specified, network 
+            weights will be randomly initialized.
+        use_gpu: bool, default=True
+            flag indicating whether or not to run operations on the GPU
+
+        Raises
+        ------
+        ValueError:
+            if `agent` is not an instance of `A2CAgent&#39;, &#39;PPOAgent&#39;, &#39;DQNAgent`
+        &#34;&#34;&#34;
+        self.env = env
+        self.agent = agent
+        self.use_gpu = use_gpu
+
+        # Set up agent
+        if (
+            not isinstance(agent, A2CAgent)
+            and not isinstance(agent, DQNAgent)
+            and not isinstance(agent, PPOAgent)
+        ):
+            raise ValueError(
+                &#39;Apprenticeship Learning is only compatible with A2C, DQN, and PPO agents.&#39;
+            )
+        if use_gpu:
+            self.agent.to_gpu()
+            self.device = &#39;cuda&#39;
+        else:
+            self.device = &#39;cpu&#39;
+        if load_path:
+            self.agent.load(load_path)
+
+        # Set up runner
+        self.runner = Runner(env, self.agent, use_gpu)
+
+    def getFeatureExpectation(
+        self,
+        observations: torch.Tensor,
+        dones: torch.Tensor,
+        gamma: float = 0.9,
+    ) -&gt; torch.Tensor:
+        &#34;&#34;&#34;
+        Calculate the feature expectation based off the given observations and 
+        gamma value.
+
+        Parameters
+        ----------
+        observations: torch.Tensor
+            tensor of observations from env
+        dones: torch.Tensor
+            tensor of dones from the env 
+            (indices where observation ends the episode)
+        gamma: float, default = 0.9
+            Discount value of observations
+
+        Returns
+        -------
+        torch.Tensor: feature expectation tensor
+        &#34;&#34;&#34;
+
+        done_indices = torch.where(dones)[0]
+        if len(done_indices) == 0:
+            done_indices = [len(dones) - 1]
+
+        gamma_t = []
+        for e in range(len(done_indices)):
+            if e == 0:
+                start = 0
+            else:
+                start = done_indices[e - 1] + 1
+            end = done_indices[e] + 1
+            gamma_t = gamma_t + [gamma ** x for x in range(end - start)]
+
+        gamma_t = (
+            torch.Tensor(gamma_t).unsqueeze(0).permute(1, 0).to(self.device)
+        )
+        sig_obs = torch.sigmoid(observations).to(self.device)
+
+        discounted_observations = gamma_t * sig_obs
+        fe = torch.sum(discounted_observations, dim=0) / len(done_indices)
+
+        return fe
+
+    def calculate_rewards(
+        self, observations: torch.Tensor, weights: torch.Tensor
+    ) -&gt; torch.Tensor:
+        &#34;&#34;&#34;
+        Calculate the new rewards using the given weights and observations.
+
+        Parameters
+        ----------
+        observations: torch.Tensor
+            tensor of observations from the current env
+        weights: torch.Tensor
+            reward weights for the observations
+
+        Returns
+        -------
+        torch.Tensor: rewards vector
+        &#34;&#34;&#34;
+
+        rewards = torch.matmul(torch.sigmoid(observations), weights)
+
+        return rewards
+
+    def initialize_step(self, gamma: float) -&gt; Tuple[List, List, List, List]:
+        &#34;&#34;&#34;
+        Initialize the buffers used in the AppL algorithm.
+        Step one in the AppL algorithm for initialization.
+
+        Parameters
+        ----------
+        gamma: float
+            discount factor for feature expectation calculations
+
+        Returns
+        -------
+        Tuple(List, List, List, List)
+            feature_expectations, feature_expectations_bar, weights, margins
+        &#34;&#34;&#34;
+        feature_expectations = []
+        feature_expectations_bar = []
+        weights = []
+        margins = []
+
+        # Get random policy feature expectation
+        agent_batch = self.runner.generate_episodes(100)
+        agent_fe = self.getFeatureExpectation(
+            agent_batch.states, agent_batch.dones, gamma
+        )
+        feature_expectations.append(agent_fe)
+
+        # Dummy weight value
+        weights.append(torch.zeros(size=[self.env.observation_space.shape[0]]))
+
+        # Dummy margin value
+        margins.append(1)
+
+        return feature_expectations, feature_expectations_bar, weights, margins
+
+    def projection_method(
+        self,
+        feature_expectations: List,
+        feature_expectations_bar: List,
+        expert_fe: torch.Tensor,
+        weights: List,
+        margins: List,
+        episode: int,
+    ):
+        &#34;&#34;&#34;
+        Perform the projection method from step 2 of the AppL algorithm.
+
+        Parameters
+        ----------
+        feature_expectations: List
+            feature_expectations list
+        feature_expectations_bar: List
+            feature_expectations_bar list
+        expert_fe: torch.Tensor
+            the feature expectations from the expert trajectories
+        weights: List
+            weights list
+        margins: List
+            margins list
+        episode: int
+            current episode
+        &#34;&#34;&#34;
+        if episode == 1:
+            feb = feature_expectations[0]
+            feature_expectations_bar.append(feb)
+            w = expert_fe - feature_expectations[0]
+        else:
+            A = feature_expectations_bar[episode - 2]
+            B = feature_expectations[episode - 1] - A
+            C = expert_fe - A
+
+            feb = A + ((torch.dot(B, C) / torch.dot(B, B)) * B)
+            feature_expectations_bar.append(feb)
+            w = expert_fe - feature_expectations_bar[episode - 1]
+
+        weights.append(w)
+
+        t = torch.norm(expert_fe - feature_expectations_bar[episode - 1], p=2)
+        margins.append(t)
+
+    def train_rl_agent(
+        self,
+        batch_size: int,
+        weights: torch.Tensor,
+        num_train: int,
+        episode: int,
+    ):
+        &#34;&#34;&#34;
+        Train the RL agent using the new reward function based on the 
+        calculated weights.
+
+        Parameters
+        ----------
+        batch_size: int
+            batch size to train the agent with per training episode
+        weights: torch.Tensor
+            calculated weights for the reward function
+        num_train: int
+            number of episodes to train the RL agent for
+        episode: int
+            current episode
+        &#34;&#34;&#34;
+        ep_count = 0
+        step = 0
+        while ep_count &lt; num_train:
+            batch_update = self.runner.generate_batch(batch_size)
+            step += batch_size
+
+            # Get calculated rewards
+            new_rewards = self.calculate_rewards(
+                batch_update[&#39;states&#39;], weights[episode]
+            )
+            batch_update[&#39;rewards&#39;] = new_rewards
+            loss_dict = self.agent.update(batch_update)
+
+            # Log loss metrics
+            for (k, v) in loss_dict.items():
+                temp = k.split(&#39;/&#39;)
+                self.log(
+                    step, {temp[0] + &#39;_&#39; + temp[1] + &#39;/&#39; + str(episode): v}
+                )
+
+            # Log training reward metrics
+            for ep_count, info_dict in batch_update[&#39;infos&#39;]:
+                for (k, v) in info_dict.items():
+                    if &#39;reward&#39; in k:
+                        agent_num = int(k.split(&#39;/&#39;)[1])
+                        self.log(
+                            ep_count,
+                            {
+                                &#39;reward_&#39;
+                                + str(episode)
+                                + &#39;/&#39;
+                                + str(agent_num): v
+                            },
+                        )
+
+    def train(
+        self,
+        num_episodes: int = 100,
+        epsilon: float = 0.1,
+        gamma: float = 0.9,
+        batch_size: int = 64,
+        num_train: int = 100,
+        expert_demos: str = &#39;demos.pkl&#39;,
+    ) -&gt; None:
+        &#34;&#34;&#34;
+        Train the AppL agent in the specified environment.
+
+        Parameters
+        ----------
+        num_episodes: int, default=100
+            number of training episodes for agent
+        epsilon: float, default=0.1
+            margin between expert and agent before early-stopping
+        gamma: float,  default=0.9
+            value used during feature expectation calculation
+        batch_size: int, default=64
+            batch size for steps to train
+        num_train: int, default=100
+            number of training episodes for the internal RL algo
+        expert_demos: str, default=&#39;demos.pkl&#39;
+            path to expert demonstrations file, expects a *.pkl of a 
+            `runner.Experiences` object
+        &#34;&#34;&#34;
+        # Expert demonstrations
+        with open(expert_demos, &#39;rb&#39;) as f:
+            demos = pickle.load(f)  # runner.Experiences
+            if self.use_gpu:
+                demos.to_gpu()
+
+        expert_observations = demos.states
+        expert_dones = demos.dones
+        expert_fe = self.getFeatureExpectation(
+            expert_observations, expert_dones, gamma
+        )
+
+        # Step 1: Initialize
+        logging.debug(&#39;Initializing variables...&#39;)
+        (
+            feature_expectations,
+            feature_expectations_bar,
+            weights,
+            margins,
+        ) = self.initialize_step(gamma)
+
+        for episode in range(1, num_episodes + 1):
+            # Step 2: Projection method
+            self.projection_method(
+                feature_expectations,
+                feature_expectations_bar,
+                expert_fe,
+                weights,
+                margins,
+                episode,
+            )
+
+            logging.debug(
+                &#39;Episode %i, Margin: %0.5f&#39; % (episode, margins[episode])
+            )
+            self.log(episode, {&#39;overall/margin&#39;: margins[episode]})
+
+            # Step 3: Termination
+            if margins[episode] &lt; epsilon:
+                logging.info(
+                    &#39;Training complete at Episode %i with margin %.05f!&#39;
+                    % (episode, margins[episode])
+                )
+                break
+
+            # Reset our agent since we did not terminate
+            self.agent.reset()
+            self.agent.set_train()
+            self.runner.reset()
+
+            # Step 4: Compute optimal policy
+            logging.debug(&#39;Training RL agent...&#39;)
+            self.train_rl_agent(batch_size, weights, num_train, episode)
+
+            # Step 5: Get feature expectation for new policy
+            agent_batch = self.runner.generate_test_episodes(100)
+            batch_rewards = agent_batch.get_episode_rewards()
+            mean_rewards = np.mean(batch_rewards)
+            std_reward = np.std(batch_rewards)
+
+            agent_fe = self.getFeatureExpectation(
+                agent_batch.states, agent_batch.dones, gamma
+            )
+
+            # Log overall episode metrics
+            self.log((episode - 1), {&#39;overall/rewards&#39;: mean_rewards})
+            logging.debug(
+                &#39;Episode %i, Mean Reward %.03f, STD %.03f&#39;
+                % (episode, mean_rewards, std_reward)
+            )
+            feature_expectations.append(agent_fe)
+
+            self.agent.save(self.save_path, episode, keep=num_episodes)
+
+        self.env.close()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ilpyt.algos.apprentice.Apprentice"><code class="flex name class">
+<span>class <span class="ident">Apprentice</span></span>
+<span>(</span><span>**kwargs: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="parameters">Parameters</h2>
+<p>**kwargs:
+arbitrary keyword arguments. Will be passed to the <code>initialize</code> and
+<code>setup_experiment</code> functions</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Apprentice(BaseAlgorithm):
+    def initialize(
+        self,
+        env: VecEnv,
+        agent: BaseAgent,
+        save_path: str = &#39;logs&#39;,
+        load_path: str = &#39;&#39;,
+        use_gpu: bool = True,
+    ) -&gt; None:
+        &#34;&#34;&#34;
+        Initialization function for the AppL algorithm.
+
+        Parameters
+        ----------
+        env: VecEnv
+            vectorized OpenAI Gym environment
+        agent: BaseAgent
+            agent for train and/or test. Must be an RL Agent
+        save_path: str, default=&#39;logs&#39;
+            path to directory to save network weights
+        load_path: str, default=&#39;&#39;
+            path to directory to load network weights. If not specified, network 
+            weights will be randomly initialized.
+        use_gpu: bool, default=True
+            flag indicating whether or not to run operations on the GPU
+
+        Raises
+        ------
+        ValueError:
+            if `agent` is not an instance of `A2CAgent&#39;, &#39;PPOAgent&#39;, &#39;DQNAgent`
+        &#34;&#34;&#34;
+        self.env = env
+        self.agent = agent
+        self.use_gpu = use_gpu
+
+        # Set up agent
+        if (
+            not isinstance(agent, A2CAgent)
+            and not isinstance(agent, DQNAgent)
+            and not isinstance(agent, PPOAgent)
+        ):
+            raise ValueError(
+                &#39;Apprenticeship Learning is only compatible with A2C, DQN, and PPO agents.&#39;
+            )
+        if use_gpu:
+            self.agent.to_gpu()
+            self.device = &#39;cuda&#39;
+        else:
+            self.device = &#39;cpu&#39;
+        if load_path:
+            self.agent.load(load_path)
+
+        # Set up runner
+        self.runner = Runner(env, self.agent, use_gpu)
+
+    def getFeatureExpectation(
+        self,
+        observations: torch.Tensor,
+        dones: torch.Tensor,
+        gamma: float = 0.9,
+    ) -&gt; torch.Tensor:
+        &#34;&#34;&#34;
+        Calculate the feature expectation based off the given observations and 
+        gamma value.
+
+        Parameters
+        ----------
+        observations: torch.Tensor
+            tensor of observations from env
+        dones: torch.Tensor
+            tensor of dones from the env 
+            (indices where observation ends the episode)
+        gamma: float, default = 0.9
+            Discount value of observations
+
+        Returns
+        -------
+        torch.Tensor: feature expectation tensor
+        &#34;&#34;&#34;
+
+        done_indices = torch.where(dones)[0]
+        if len(done_indices) == 0:
+            done_indices = [len(dones) - 1]
+
+        gamma_t = []
+        for e in range(len(done_indices)):
+            if e == 0:
+                start = 0
+            else:
+                start = done_indices[e - 1] + 1
+            end = done_indices[e] + 1
+            gamma_t = gamma_t + [gamma ** x for x in range(end - start)]
+
+        gamma_t = (
+            torch.Tensor(gamma_t).unsqueeze(0).permute(1, 0).to(self.device)
+        )
+        sig_obs = torch.sigmoid(observations).to(self.device)
+
+        discounted_observations = gamma_t * sig_obs
+        fe = torch.sum(discounted_observations, dim=0) / len(done_indices)
+
+        return fe
+
+    def calculate_rewards(
+        self, observations: torch.Tensor, weights: torch.Tensor
+    ) -&gt; torch.Tensor:
+        &#34;&#34;&#34;
+        Calculate the new rewards using the given weights and observations.
+
+        Parameters
+        ----------
+        observations: torch.Tensor
+            tensor of observations from the current env
+        weights: torch.Tensor
+            reward weights for the observations
+
+        Returns
+        -------
+        torch.Tensor: rewards vector
+        &#34;&#34;&#34;
+
+        rewards = torch.matmul(torch.sigmoid(observations), weights)
+
+        return rewards
+
+    def initialize_step(self, gamma: float) -&gt; Tuple[List, List, List, List]:
+        &#34;&#34;&#34;
+        Initialize the buffers used in the AppL algorithm.
+        Step one in the AppL algorithm for initialization.
+
+        Parameters
+        ----------
+        gamma: float
+            discount factor for feature expectation calculations
+
+        Returns
+        -------
+        Tuple(List, List, List, List)
+            feature_expectations, feature_expectations_bar, weights, margins
+        &#34;&#34;&#34;
+        feature_expectations = []
+        feature_expectations_bar = []
+        weights = []
+        margins = []
+
+        # Get random policy feature expectation
+        agent_batch = self.runner.generate_episodes(100)
+        agent_fe = self.getFeatureExpectation(
+            agent_batch.states, agent_batch.dones, gamma
+        )
+        feature_expectations.append(agent_fe)
+
+        # Dummy weight value
+        weights.append(torch.zeros(size=[self.env.observation_space.shape[0]]))
+
+        # Dummy margin value
+        margins.append(1)
+
+        return feature_expectations, feature_expectations_bar, weights, margins
+
+    def projection_method(
+        self,
+        feature_expectations: List,
+        feature_expectations_bar: List,
+        expert_fe: torch.Tensor,
+        weights: List,
+        margins: List,
+        episode: int,
+    ):
+        &#34;&#34;&#34;
+        Perform the projection method from step 2 of the AppL algorithm.
+
+        Parameters
+        ----------
+        feature_expectations: List
+            feature_expectations list
+        feature_expectations_bar: List
+            feature_expectations_bar list
+        expert_fe: torch.Tensor
+            the feature expectations from the expert trajectories
+        weights: List
+            weights list
+        margins: List
+            margins list
+        episode: int
+            current episode
+        &#34;&#34;&#34;
+        if episode == 1:
+            feb = feature_expectations[0]
+            feature_expectations_bar.append(feb)
+            w = expert_fe - feature_expectations[0]
+        else:
+            A = feature_expectations_bar[episode - 2]
+            B = feature_expectations[episode - 1] - A
+            C = expert_fe - A
+
+            feb = A + ((torch.dot(B, C) / torch.dot(B, B)) * B)
+            feature_expectations_bar.append(feb)
+            w = expert_fe - feature_expectations_bar[episode - 1]
+
+        weights.append(w)
+
+        t = torch.norm(expert_fe - feature_expectations_bar[episode - 1], p=2)
+        margins.append(t)
+
+    def train_rl_agent(
+        self,
+        batch_size: int,
+        weights: torch.Tensor,
+        num_train: int,
+        episode: int,
+    ):
+        &#34;&#34;&#34;
+        Train the RL agent using the new reward function based on the 
+        calculated weights.
+
+        Parameters
+        ----------
+        batch_size: int
+            batch size to train the agent with per training episode
+        weights: torch.Tensor
+            calculated weights for the reward function
+        num_train: int
+            number of episodes to train the RL agent for
+        episode: int
+            current episode
+        &#34;&#34;&#34;
+        ep_count = 0
+        step = 0
+        while ep_count &lt; num_train:
+            batch_update = self.runner.generate_batch(batch_size)
+            step += batch_size
+
+            # Get calculated rewards
+            new_rewards = self.calculate_rewards(
+                batch_update[&#39;states&#39;], weights[episode]
+            )
+            batch_update[&#39;rewards&#39;] = new_rewards
+            loss_dict = self.agent.update(batch_update)
+
+            # Log loss metrics
+            for (k, v) in loss_dict.items():
+                temp = k.split(&#39;/&#39;)
+                self.log(
+                    step, {temp[0] + &#39;_&#39; + temp[1] + &#39;/&#39; + str(episode): v}
+                )
+
+            # Log training reward metrics
+            for ep_count, info_dict in batch_update[&#39;infos&#39;]:
+                for (k, v) in info_dict.items():
+                    if &#39;reward&#39; in k:
+                        agent_num = int(k.split(&#39;/&#39;)[1])
+                        self.log(
+                            ep_count,
+                            {
+                                &#39;reward_&#39;
+                                + str(episode)
+                                + &#39;/&#39;
+                                + str(agent_num): v
+                            },
+                        )
+
+    def train(
+        self,
+        num_episodes: int = 100,
+        epsilon: float = 0.1,
+        gamma: float = 0.9,
+        batch_size: int = 64,
+        num_train: int = 100,
+        expert_demos: str = &#39;demos.pkl&#39;,
+    ) -&gt; None:
+        &#34;&#34;&#34;
+        Train the AppL agent in the specified environment.
+
+        Parameters
+        ----------
+        num_episodes: int, default=100
+            number of training episodes for agent
+        epsilon: float, default=0.1
+            margin between expert and agent before early-stopping
+        gamma: float,  default=0.9
+            value used during feature expectation calculation
+        batch_size: int, default=64
+            batch size for steps to train
+        num_train: int, default=100
+            number of training episodes for the internal RL algo
+        expert_demos: str, default=&#39;demos.pkl&#39;
+            path to expert demonstrations file, expects a *.pkl of a 
+            `runner.Experiences` object
+        &#34;&#34;&#34;
+        # Expert demonstrations
+        with open(expert_demos, &#39;rb&#39;) as f:
+            demos = pickle.load(f)  # runner.Experiences
+            if self.use_gpu:
+                demos.to_gpu()
+
+        expert_observations = demos.states
+        expert_dones = demos.dones
+        expert_fe = self.getFeatureExpectation(
+            expert_observations, expert_dones, gamma
+        )
+
+        # Step 1: Initialize
+        logging.debug(&#39;Initializing variables...&#39;)
+        (
+            feature_expectations,
+            feature_expectations_bar,
+            weights,
+            margins,
+        ) = self.initialize_step(gamma)
+
+        for episode in range(1, num_episodes + 1):
+            # Step 2: Projection method
+            self.projection_method(
+                feature_expectations,
+                feature_expectations_bar,
+                expert_fe,
+                weights,
+                margins,
+                episode,
+            )
+
+            logging.debug(
+                &#39;Episode %i, Margin: %0.5f&#39; % (episode, margins[episode])
+            )
+            self.log(episode, {&#39;overall/margin&#39;: margins[episode]})
+
+            # Step 3: Termination
+            if margins[episode] &lt; epsilon:
+                logging.info(
+                    &#39;Training complete at Episode %i with margin %.05f!&#39;
+                    % (episode, margins[episode])
+                )
+                break
+
+            # Reset our agent since we did not terminate
+            self.agent.reset()
+            self.agent.set_train()
+            self.runner.reset()
+
+            # Step 4: Compute optimal policy
+            logging.debug(&#39;Training RL agent...&#39;)
+            self.train_rl_agent(batch_size, weights, num_train, episode)
+
+            # Step 5: Get feature expectation for new policy
+            agent_batch = self.runner.generate_test_episodes(100)
+            batch_rewards = agent_batch.get_episode_rewards()
+            mean_rewards = np.mean(batch_rewards)
+            std_reward = np.std(batch_rewards)
+
+            agent_fe = self.getFeatureExpectation(
+                agent_batch.states, agent_batch.dones, gamma
+            )
+
+            # Log overall episode metrics
+            self.log((episode - 1), {&#39;overall/rewards&#39;: mean_rewards})
+            logging.debug(
+                &#39;Episode %i, Mean Reward %.03f, STD %.03f&#39;
+                % (episode, mean_rewards, std_reward)
+            )
+            feature_expectations.append(agent_fe)
+
+            self.agent.save(self.save_path, episode, keep=num_episodes)
+
+        self.env.close()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="ilpyt.algos.base_algo.BaseAlgorithm" href="base_algo.html#ilpyt.algos.base_algo.BaseAlgorithm">BaseAlgorithm</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ilpyt.algos.apprentice.Apprentice.calculate_rewards"><code class="name flex">
+<span>def <span class="ident">calculate_rewards</span></span>(<span>self, observations: torch.Tensor, weights: torch.Tensor) ‑> torch.Tensor</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the new rewards using the given weights and observations.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>observations</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>tensor of observations from the current env</dd>
+<dt><strong><code>weights</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>reward weights for the observations</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>torch.Tensor: rewards vector</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calculate_rewards(
+    self, observations: torch.Tensor, weights: torch.Tensor
+) -&gt; torch.Tensor:
+    &#34;&#34;&#34;
+    Calculate the new rewards using the given weights and observations.
+
+    Parameters
+    ----------
+    observations: torch.Tensor
+        tensor of observations from the current env
+    weights: torch.Tensor
+        reward weights for the observations
+
+    Returns
+    -------
+    torch.Tensor: rewards vector
+    &#34;&#34;&#34;
+
+    rewards = torch.matmul(torch.sigmoid(observations), weights)
+
+    return rewards</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.algos.apprentice.Apprentice.getFeatureExpectation"><code class="name flex">
+<span>def <span class="ident">getFeatureExpectation</span></span>(<span>self, observations: torch.Tensor, dones: torch.Tensor, gamma: float = 0.9) ‑> torch.Tensor</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the feature expectation based off the given observations and
+gamma value.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>observations</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>tensor of observations from env</dd>
+<dt><strong><code>dones</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>tensor of dones from the env
+(indices where observation ends the episode)</dd>
+<dt><strong><code>gamma</code></strong> :&ensp;<code>float</code>, default <code>= 0.9</code></dt>
+<dd>Discount value of observations</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>torch.Tensor: feature expectation tensor</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getFeatureExpectation(
+    self,
+    observations: torch.Tensor,
+    dones: torch.Tensor,
+    gamma: float = 0.9,
+) -&gt; torch.Tensor:
+    &#34;&#34;&#34;
+    Calculate the feature expectation based off the given observations and 
+    gamma value.
+
+    Parameters
+    ----------
+    observations: torch.Tensor
+        tensor of observations from env
+    dones: torch.Tensor
+        tensor of dones from the env 
+        (indices where observation ends the episode)
+    gamma: float, default = 0.9
+        Discount value of observations
+
+    Returns
+    -------
+    torch.Tensor: feature expectation tensor
+    &#34;&#34;&#34;
+
+    done_indices = torch.where(dones)[0]
+    if len(done_indices) == 0:
+        done_indices = [len(dones) - 1]
+
+    gamma_t = []
+    for e in range(len(done_indices)):
+        if e == 0:
+            start = 0
+        else:
+            start = done_indices[e - 1] + 1
+        end = done_indices[e] + 1
+        gamma_t = gamma_t + [gamma ** x for x in range(end - start)]
+
+    gamma_t = (
+        torch.Tensor(gamma_t).unsqueeze(0).permute(1, 0).to(self.device)
+    )
+    sig_obs = torch.sigmoid(observations).to(self.device)
+
+    discounted_observations = gamma_t * sig_obs
+    fe = torch.sum(discounted_observations, dim=0) / len(done_indices)
+
+    return fe</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.algos.apprentice.Apprentice.initialize"><code class="name flex">
+<span>def <span class="ident">initialize</span></span>(<span>self, env: <a title="ilpyt.envs.vec_env.VecEnv" href="../envs/vec_env.html#ilpyt.envs.vec_env.VecEnv">VecEnv</a>, agent: <a title="ilpyt.agents.base_agent.BaseAgent" href="../agents/base_agent.html#ilpyt.agents.base_agent.BaseAgent">BaseAgent</a>, save_path: str = 'logs', load_path: str = '', use_gpu: bool = True) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Initialization function for the AppL algorithm.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>env</code></strong> :&ensp;<code>VecEnv</code></dt>
+<dd>vectorized OpenAI Gym environment</dd>
+<dt><strong><code>agent</code></strong> :&ensp;<code>BaseAgent</code></dt>
+<dd>agent for train and/or test. Must be an RL Agent</dd>
+<dt><strong><code>save_path</code></strong> :&ensp;<code>str</code>, default=<code>'logs'</code></dt>
+<dd>path to directory to save network weights</dd>
+<dt><strong><code>load_path</code></strong> :&ensp;<code>str</code>, default=<code>''</code></dt>
+<dd>path to directory to load network weights. If not specified, network
+weights will be randomly initialized.</dd>
+<dt><strong><code>use_gpu</code></strong> :&ensp;<code>bool</code>, default=<code>True</code></dt>
+<dd>flag indicating whether or not to run operations on the GPU</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>if <code>agent</code> is not an instance of <code>A2CAgent', 'PPOAgent', 'DQNAgent</code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def initialize(
+    self,
+    env: VecEnv,
+    agent: BaseAgent,
+    save_path: str = &#39;logs&#39;,
+    load_path: str = &#39;&#39;,
+    use_gpu: bool = True,
+) -&gt; None:
+    &#34;&#34;&#34;
+    Initialization function for the AppL algorithm.
+
+    Parameters
+    ----------
+    env: VecEnv
+        vectorized OpenAI Gym environment
+    agent: BaseAgent
+        agent for train and/or test. Must be an RL Agent
+    save_path: str, default=&#39;logs&#39;
+        path to directory to save network weights
+    load_path: str, default=&#39;&#39;
+        path to directory to load network weights. If not specified, network 
+        weights will be randomly initialized.
+    use_gpu: bool, default=True
+        flag indicating whether or not to run operations on the GPU
+
+    Raises
+    ------
+    ValueError:
+        if `agent` is not an instance of `A2CAgent&#39;, &#39;PPOAgent&#39;, &#39;DQNAgent`
+    &#34;&#34;&#34;
+    self.env = env
+    self.agent = agent
+    self.use_gpu = use_gpu
+
+    # Set up agent
+    if (
+        not isinstance(agent, A2CAgent)
+        and not isinstance(agent, DQNAgent)
+        and not isinstance(agent, PPOAgent)
+    ):
+        raise ValueError(
+            &#39;Apprenticeship Learning is only compatible with A2C, DQN, and PPO agents.&#39;
+        )
+    if use_gpu:
+        self.agent.to_gpu()
+        self.device = &#39;cuda&#39;
+    else:
+        self.device = &#39;cpu&#39;
+    if load_path:
+        self.agent.load(load_path)
+
+    # Set up runner
+    self.runner = Runner(env, self.agent, use_gpu)</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.algos.apprentice.Apprentice.initialize_step"><code class="name flex">
+<span>def <span class="ident">initialize_step</span></span>(<span>self, gamma: float) ‑> Tuple[List, List, List, List]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Initialize the buffers used in the AppL algorithm.
+Step one in the AppL algorithm for initialization.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>gamma</code></strong> :&ensp;<code>float</code></dt>
+<dd>discount factor for feature expectation calculations</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Tuple(List, List, List, List)</code></dt>
+<dd>feature_expectations, feature_expectations_bar, weights, margins</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def initialize_step(self, gamma: float) -&gt; Tuple[List, List, List, List]:
+    &#34;&#34;&#34;
+    Initialize the buffers used in the AppL algorithm.
+    Step one in the AppL algorithm for initialization.
+
+    Parameters
+    ----------
+    gamma: float
+        discount factor for feature expectation calculations
+
+    Returns
+    -------
+    Tuple(List, List, List, List)
+        feature_expectations, feature_expectations_bar, weights, margins
+    &#34;&#34;&#34;
+    feature_expectations = []
+    feature_expectations_bar = []
+    weights = []
+    margins = []
+
+    # Get random policy feature expectation
+    agent_batch = self.runner.generate_episodes(100)
+    agent_fe = self.getFeatureExpectation(
+        agent_batch.states, agent_batch.dones, gamma
+    )
+    feature_expectations.append(agent_fe)
+
+    # Dummy weight value
+    weights.append(torch.zeros(size=[self.env.observation_space.shape[0]]))
+
+    # Dummy margin value
+    margins.append(1)
+
+    return feature_expectations, feature_expectations_bar, weights, margins</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.algos.apprentice.Apprentice.projection_method"><code class="name flex">
+<span>def <span class="ident">projection_method</span></span>(<span>self, feature_expectations: List, feature_expectations_bar: List, expert_fe: torch.Tensor, weights: List, margins: List, episode: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Perform the projection method from step 2 of the AppL algorithm.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>feature_expectations</code></strong> :&ensp;<code>List</code></dt>
+<dd>feature_expectations list</dd>
+<dt><strong><code>feature_expectations_bar</code></strong> :&ensp;<code>List</code></dt>
+<dd>feature_expectations_bar list</dd>
+<dt><strong><code>expert_fe</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>the feature expectations from the expert trajectories</dd>
+<dt><strong><code>weights</code></strong> :&ensp;<code>List</code></dt>
+<dd>weights list</dd>
+<dt><strong><code>margins</code></strong> :&ensp;<code>List</code></dt>
+<dd>margins list</dd>
+<dt><strong><code>episode</code></strong> :&ensp;<code>int</code></dt>
+<dd>current episode</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def projection_method(
+    self,
+    feature_expectations: List,
+    feature_expectations_bar: List,
+    expert_fe: torch.Tensor,
+    weights: List,
+    margins: List,
+    episode: int,
+):
+    &#34;&#34;&#34;
+    Perform the projection method from step 2 of the AppL algorithm.
+
+    Parameters
+    ----------
+    feature_expectations: List
+        feature_expectations list
+    feature_expectations_bar: List
+        feature_expectations_bar list
+    expert_fe: torch.Tensor
+        the feature expectations from the expert trajectories
+    weights: List
+        weights list
+    margins: List
+        margins list
+    episode: int
+        current episode
+    &#34;&#34;&#34;
+    if episode == 1:
+        feb = feature_expectations[0]
+        feature_expectations_bar.append(feb)
+        w = expert_fe - feature_expectations[0]
+    else:
+        A = feature_expectations_bar[episode - 2]
+        B = feature_expectations[episode - 1] - A
+        C = expert_fe - A
+
+        feb = A + ((torch.dot(B, C) / torch.dot(B, B)) * B)
+        feature_expectations_bar.append(feb)
+        w = expert_fe - feature_expectations_bar[episode - 1]
+
+    weights.append(w)
+
+    t = torch.norm(expert_fe - feature_expectations_bar[episode - 1], p=2)
+    margins.append(t)</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.algos.apprentice.Apprentice.train"><code class="name flex">
+<span>def <span class="ident">train</span></span>(<span>self, num_episodes: int = 100, epsilon: float = 0.1, gamma: float = 0.9, batch_size: int = 64, num_train: int = 100, expert_demos: str = 'demos.pkl') ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Train the AppL agent in the specified environment.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>num_episodes</code></strong> :&ensp;<code>int</code>, default=<code>100</code></dt>
+<dd>number of training episodes for agent</dd>
+<dt><strong><code>epsilon</code></strong> :&ensp;<code>float</code>, default=<code>0.1</code></dt>
+<dd>margin between expert and agent before early-stopping</dd>
+<dt><strong><code>gamma</code></strong> :&ensp;<code>float</code>,
+default=<code>0.9</code></dt>
+<dd>value used during feature expectation calculation</dd>
+<dt><strong><code>batch_size</code></strong> :&ensp;<code>int</code>, default=<code>64</code></dt>
+<dd>batch size for steps to train</dd>
+<dt><strong><code>num_train</code></strong> :&ensp;<code>int</code>, default=<code>100</code></dt>
+<dd>number of training episodes for the internal RL algo</dd>
+<dt><strong><code>expert_demos</code></strong> :&ensp;<code>str</code>, default=<code>'demos.pkl'</code></dt>
+<dd>path to expert demonstrations file, expects a *.pkl of a
+<code>runner.Experiences</code> object</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def train(
+    self,
+    num_episodes: int = 100,
+    epsilon: float = 0.1,
+    gamma: float = 0.9,
+    batch_size: int = 64,
+    num_train: int = 100,
+    expert_demos: str = &#39;demos.pkl&#39;,
+) -&gt; None:
+    &#34;&#34;&#34;
+    Train the AppL agent in the specified environment.
+
+    Parameters
+    ----------
+    num_episodes: int, default=100
+        number of training episodes for agent
+    epsilon: float, default=0.1
+        margin between expert and agent before early-stopping
+    gamma: float,  default=0.9
+        value used during feature expectation calculation
+    batch_size: int, default=64
+        batch size for steps to train
+    num_train: int, default=100
+        number of training episodes for the internal RL algo
+    expert_demos: str, default=&#39;demos.pkl&#39;
+        path to expert demonstrations file, expects a *.pkl of a 
+        `runner.Experiences` object
+    &#34;&#34;&#34;
+    # Expert demonstrations
+    with open(expert_demos, &#39;rb&#39;) as f:
+        demos = pickle.load(f)  # runner.Experiences
+        if self.use_gpu:
+            demos.to_gpu()
+
+    expert_observations = demos.states
+    expert_dones = demos.dones
+    expert_fe = self.getFeatureExpectation(
+        expert_observations, expert_dones, gamma
+    )
+
+    # Step 1: Initialize
+    logging.debug(&#39;Initializing variables...&#39;)
+    (
+        feature_expectations,
+        feature_expectations_bar,
+        weights,
+        margins,
+    ) = self.initialize_step(gamma)
+
+    for episode in range(1, num_episodes + 1):
+        # Step 2: Projection method
+        self.projection_method(
+            feature_expectations,
+            feature_expectations_bar,
+            expert_fe,
+            weights,
+            margins,
+            episode,
+        )
+
+        logging.debug(
+            &#39;Episode %i, Margin: %0.5f&#39; % (episode, margins[episode])
+        )
+        self.log(episode, {&#39;overall/margin&#39;: margins[episode]})
+
+        # Step 3: Termination
+        if margins[episode] &lt; epsilon:
+            logging.info(
+                &#39;Training complete at Episode %i with margin %.05f!&#39;
+                % (episode, margins[episode])
+            )
+            break
+
+        # Reset our agent since we did not terminate
+        self.agent.reset()
+        self.agent.set_train()
+        self.runner.reset()
+
+        # Step 4: Compute optimal policy
+        logging.debug(&#39;Training RL agent...&#39;)
+        self.train_rl_agent(batch_size, weights, num_train, episode)
+
+        # Step 5: Get feature expectation for new policy
+        agent_batch = self.runner.generate_test_episodes(100)
+        batch_rewards = agent_batch.get_episode_rewards()
+        mean_rewards = np.mean(batch_rewards)
+        std_reward = np.std(batch_rewards)
+
+        agent_fe = self.getFeatureExpectation(
+            agent_batch.states, agent_batch.dones, gamma
+        )
+
+        # Log overall episode metrics
+        self.log((episode - 1), {&#39;overall/rewards&#39;: mean_rewards})
+        logging.debug(
+            &#39;Episode %i, Mean Reward %.03f, STD %.03f&#39;
+            % (episode, mean_rewards, std_reward)
+        )
+        feature_expectations.append(agent_fe)
+
+        self.agent.save(self.save_path, episode, keep=num_episodes)
+
+    self.env.close()</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.algos.apprentice.Apprentice.train_rl_agent"><code class="name flex">
+<span>def <span class="ident">train_rl_agent</span></span>(<span>self, batch_size: int, weights: torch.Tensor, num_train: int, episode: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Train the RL agent using the new reward function based on the
+calculated weights.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>batch_size</code></strong> :&ensp;<code>int</code></dt>
+<dd>batch size to train the agent with per training episode</dd>
+<dt><strong><code>weights</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>calculated weights for the reward function</dd>
+<dt><strong><code>num_train</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of episodes to train the RL agent for</dd>
+<dt><strong><code>episode</code></strong> :&ensp;<code>int</code></dt>
+<dd>current episode</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def train_rl_agent(
+    self,
+    batch_size: int,
+    weights: torch.Tensor,
+    num_train: int,
+    episode: int,
+):
+    &#34;&#34;&#34;
+    Train the RL agent using the new reward function based on the 
+    calculated weights.
+
+    Parameters
+    ----------
+    batch_size: int
+        batch size to train the agent with per training episode
+    weights: torch.Tensor
+        calculated weights for the reward function
+    num_train: int
+        number of episodes to train the RL agent for
+    episode: int
+        current episode
+    &#34;&#34;&#34;
+    ep_count = 0
+    step = 0
+    while ep_count &lt; num_train:
+        batch_update = self.runner.generate_batch(batch_size)
+        step += batch_size
+
+        # Get calculated rewards
+        new_rewards = self.calculate_rewards(
+            batch_update[&#39;states&#39;], weights[episode]
+        )
+        batch_update[&#39;rewards&#39;] = new_rewards
+        loss_dict = self.agent.update(batch_update)
+
+        # Log loss metrics
+        for (k, v) in loss_dict.items():
+            temp = k.split(&#39;/&#39;)
+            self.log(
+                step, {temp[0] + &#39;_&#39; + temp[1] + &#39;/&#39; + str(episode): v}
+            )
+
+        # Log training reward metrics
+        for ep_count, info_dict in batch_update[&#39;infos&#39;]:
+            for (k, v) in info_dict.items():
+                if &#39;reward&#39; in k:
+                    agent_num = int(k.split(&#39;/&#39;)[1])
+                    self.log(
+                        ep_count,
+                        {
+                            &#39;reward_&#39;
+                            + str(episode)
+                            + &#39;/&#39;
+                            + str(agent_num): v
+                        },
+                    )</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="ilpyt.algos.base_algo.BaseAlgorithm" href="base_algo.html#ilpyt.algos.base_algo.BaseAlgorithm">BaseAlgorithm</a></b></code>:
+<ul class="hlist">
+<li><code><a title="ilpyt.algos.base_algo.BaseAlgorithm.log" href="base_algo.html#ilpyt.algos.base_algo.BaseAlgorithm.log">log</a></code></li>
+<li><code><a title="ilpyt.algos.base_algo.BaseAlgorithm.setup_experiment" href="base_algo.html#ilpyt.algos.base_algo.BaseAlgorithm.setup_experiment">setup_experiment</a></code></li>
+<li><code><a title="ilpyt.algos.base_algo.BaseAlgorithm.test" href="base_algo.html#ilpyt.algos.base_algo.BaseAlgorithm.test">test</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ilpyt.algos" href="index.html">ilpyt.algos</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ilpyt.algos.apprentice.Apprentice" href="#ilpyt.algos.apprentice.Apprentice">Apprentice</a></code></h4>
+<ul class="">
+<li><code><a title="ilpyt.algos.apprentice.Apprentice.calculate_rewards" href="#ilpyt.algos.apprentice.Apprentice.calculate_rewards">calculate_rewards</a></code></li>
+<li><code><a title="ilpyt.algos.apprentice.Apprentice.getFeatureExpectation" href="#ilpyt.algos.apprentice.Apprentice.getFeatureExpectation">getFeatureExpectation</a></code></li>
+<li><code><a title="ilpyt.algos.apprentice.Apprentice.initialize" href="#ilpyt.algos.apprentice.Apprentice.initialize">initialize</a></code></li>
+<li><code><a title="ilpyt.algos.apprentice.Apprentice.initialize_step" href="#ilpyt.algos.apprentice.Apprentice.initialize_step">initialize_step</a></code></li>
+<li><code><a title="ilpyt.algos.apprentice.Apprentice.projection_method" href="#ilpyt.algos.apprentice.Apprentice.projection_method">projection_method</a></code></li>
+<li><code><a title="ilpyt.algos.apprentice.Apprentice.train" href="#ilpyt.algos.apprentice.Apprentice.train">train</a></code></li>
+<li><code><a title="ilpyt.algos.apprentice.Apprentice.train_rl_agent" href="#ilpyt.algos.apprentice.Apprentice.train_rl_agent">train_rl_agent</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

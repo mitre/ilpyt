@@ -1,0 +1,1322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ilpyt.runners.runner API documentation</title>
+<meta name="description" content="The runner coordinates the agent-environment interaction loop.
+It collects
+transitions (state, action, reward, next state) over specified intervals …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ilpyt.runners.runner</code></h1>
+</header>
+<section id="section-intro">
+<p>The runner coordinates the agent-environment interaction loop.
+It collects
+transitions (state, action, reward, next state) over specified intervals of
+time.
+We can have the runner generate a collection of transitions for us by
+calling <code>generate_batch</code> and <code>generate_episodes</code>.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+The runner coordinates the agent-environment interaction loop.  It collects 
+transitions (state, action, reward, next state) over specified intervals of 
+time.  We can have the runner generate a collection of transitions for us by 
+calling `generate_batch` and `generate_episodes`. 
+&#34;&#34;&#34;
+
+from typing import Any, Dict, List
+
+import numpy as np
+import torch
+
+from ilpyt.agents.base_agent import BaseAgent
+from ilpyt.envs.vec_env import VecEnv
+from ilpyt.utils.seed_utils import set_seed
+
+
+class Experiences:
+    def __init__(self) -&gt; None:
+        &#34;&#34;&#34;
+        Initialize experiences object, which stores a stack of agent-environment 
+        transitions.
+        &#34;&#34;&#34;
+        self.states = []
+        self.actions = []
+        self.rewards = []
+        self.dones = []
+
+    def add(
+        self,
+        state: torch.Tensor,
+        action: torch.Tensor,
+        reward: torch.Tensor,
+        done: torch.Tensor,
+    ) -&gt; None:
+        &#34;&#34;&#34;
+        Add a transition to the stack of transitions.
+
+        Parameters
+        ----------
+        state: torch.Tensor
+        action: torch.Tensor
+        reward: torch.Tensor
+        done: torch.Tensor
+        &#34;&#34;&#34;
+        self.states.append(state)
+        self.actions.append(action)
+        self.rewards.append(reward)
+        self.dones.append(done)
+
+    def to_torch(self) -&gt; None:
+        &#34;&#34;&#34;
+        Convert the stack of transitions from a list of torch.Tensors to a 
+        single instance of torch.Tensor.
+        &#34;&#34;&#34;
+        self.states = torch.stack(self.states)
+        self.actions = torch.stack(self.actions)
+        self.rewards = torch.tensor(self.rewards)
+        self.dones = torch.tensor(self.dones)
+
+    def to_gpu(self) -&gt; None:
+        &#34;&#34;&#34;
+        Place the experience on the GPU.
+        &#34;&#34;&#34;
+        self.states = self.states.cuda()
+        self.actions = self.actions.cuda()
+        self.rewards = self.rewards.cuda()
+        self.dones = self.dones.cuda()
+
+    def get_episode_rewards(self) -&gt; List[float]:
+        &#34;&#34;&#34;
+        Get the episode rewards.
+
+        Returns
+        -------
+        List[float]:
+            list of episode rewards
+        &#34;&#34;&#34;
+        cumulative_rewards = []
+        episode_ends = torch.where(self.dones)[0] + 1
+        for i in range(len(episode_ends)):
+            if i == 0:
+                start = 0
+            else:
+                start = episode_ends[i - 1]
+            end = episode_ends[i]
+            r = torch.sum(self.rewards[start:end]).item()
+            cumulative_rewards.append(r)
+        return cumulative_rewards
+
+
+class Runner:
+    def __init__(self, env: VecEnv, agent: BaseAgent, use_gpu: bool) -&gt; None:
+        &#34;&#34;&#34;
+        The runner manages the agent and environment interaction to collect
+        episodes and/or rollouts.
+
+        Parameters
+        ----------
+        env: VecEnv
+            Multiprocessing compatible gym environment
+        agent: BaseAgent
+            Agent to collect rollouts or episode experiences from
+        use_gpu: bool
+            whether or not to use GPU, if false use CPU
+        &#34;&#34;&#34;
+        self.env = env
+        self.agent = agent
+        self.num_env = self.env.num_envs
+        self.use_gpu = use_gpu
+
+        if self.use_gpu:
+            self.agent.to_gpu()
+
+        # Initialize state
+        self.state = torch.tensor(self.env.reset())
+        if self.use_gpu:
+            self.state = self.state.cuda()
+
+        # Episode statistics
+        # Each list entry corresponds to a different parallel environment.
+        self.episode_stats = {
+            &#39;reward&#39;: np.zeros(self.num_env),
+            &#39;length&#39;: np.zeros(self.num_env),
+            &#39;count&#39;: np.zeros(self.num_env),
+        }
+
+    def reset(self) -&gt; None:
+        &#34;&#34;&#34;
+        Reset the state and episode stats within the Runner.
+        &#34;&#34;&#34;
+        self.state = torch.tensor(self.env.reset())
+        if self.use_gpu:
+            self.agent.to_gpu()
+            self.state = self.state.cuda()
+        self.episode_stats = {
+            &#39;reward&#39;: np.zeros(self.num_env),
+            &#39;length&#39;: np.zeros(self.num_env),
+            &#39;count&#39;: np.zeros(self.num_env),
+        }
+
+    @torch.no_grad()
+    def generate_batch(self, rollout_steps: int) -&gt; Dict[str, torch.Tensor]:
+        &#34;&#34;&#34;
+        Generate a batch of rollouts.
+
+        Will return a dictionary with keys: states, next_states, actions,
+        rewards, dones, and infos.
+
+        - states and next_states will have a shape of (rollout_steps, num_env, state_shape).
+        - actions will have a shape of (rollout_steps, num_env, act_shape).
+        - rewards and dones will have a shape of (rollout_steps, num_env).
+        - infos will contain episode metadata -- it will be expressed as a list of dictionaries with values summarizing the episode_length and total_reward accumulated.
+
+        Parameters
+        ----------
+        rollout_steps: int
+            number of rollout steps to collect
+
+        Returns
+        -------
+        Dict[str, torch.Tensor]:
+            batch of rollouts with keys: states, next_states, actions, rewards, 
+            dones, and infos
+        &#34;&#34;&#34;
+        # Initialize batch
+        batch_size = (
+            rollout_steps,
+            self.num_env,
+        )
+        obs_shape = batch_size + self.env.observation_shape
+        if self.env.type == &#39;discrete&#39;:
+            act_shape = batch_size
+        else:
+            act_shape = batch_size + self.env.action_shape
+        batch: Dict[str, Any] = {
+            &#39;states&#39;: torch.empty(obs_shape),
+            &#39;next_states&#39;: torch.empty(obs_shape),
+            &#39;actions&#39;: torch.empty(act_shape),
+            &#39;rewards&#39;: torch.empty(batch_size),
+            &#39;dones&#39;: torch.empty(batch_size),
+            &#39;infos&#39;: [],
+        }
+
+        for step in range(rollout_steps):
+            # Agent takes action
+            action = self.agent.step(self.state)
+
+            # Update environment
+            next_state, reward, done, info = self.env.step(action)
+            # print(&#39;REWARD IN RUNNER:&#39; , reward)
+            # Record transition to batch
+            batch[&#39;states&#39;][step] = torch.as_tensor(self.state)
+            batch[&#39;next_states&#39;][step] = torch.as_tensor(next_state)
+            batch[&#39;actions&#39;][step] = torch.tensor(
+                action, dtype=torch.float, requires_grad=True
+            )
+            batch[&#39;rewards&#39;][step] = torch.as_tensor(reward)
+            batch[&#39;dones&#39;][step] = torch.as_tensor(done)
+
+            # Update episode stats
+            self.episode_stats[&#39;reward&#39;] += reward
+            self.episode_stats[&#39;length&#39;] += np.ones(self.num_env)
+            self.episode_stats[&#39;count&#39;] += done
+
+            # On episode end, update batch infos and reset
+            for i in range(self.num_env):
+                if done[i]:
+                    update_dict = {
+                        &#39;reward/%i&#39; % i: self.episode_stats[&#39;reward&#39;][i],
+                        &#39;length/%i&#39; % i: self.episode_stats[&#39;length&#39;][i],
+                    }
+                    update = [self.episode_stats[&#39;count&#39;][i], update_dict]
+                    batch[&#39;infos&#39;].append(update)
+                    self.episode_stats[&#39;reward&#39;][i] = 0
+                    self.episode_stats[&#39;length&#39;][i] = 0
+
+            # Update state
+            self.state = torch.tensor(next_state)
+            if self.use_gpu:
+                self.state = self.state.cuda()
+
+        # Batch to GPU
+        if self.use_gpu:
+            for (k, v) in batch.items():
+                if k != &#39;infos&#39;:
+                    batch[k] = v.cuda()
+
+        return batch
+
+    @torch.no_grad()
+    def generate_episodes(self, num_episodes: int) -&gt; Experiences:
+        &#34;&#34;&#34;
+        Generate episodes.
+        Only records states, actions, rewards.
+
+        Will return a list of torch Tensors.
+
+        Parameters
+        ----------
+        num_episodes: int
+            number of episodes to collectively acquire across all of the
+            environment threads
+
+        Returns
+        -------
+        Experiences (Dict[str, torch.Tensor]]):
+            {&#39;states&#39;: [], &#39;actions&#39;: [], &#39;rewards&#39;: [], &#39;dones&#39;: []}
+        &#34;&#34;&#34;
+        # Initialize batch
+        eps_by_env = [Experiences() for i in range(self.num_env)]
+        all_episodes = []
+
+        ep_count = 0
+        self.env.reset()
+        while ep_count &lt; num_episodes:
+
+            # Agent takes action
+            action = self.agent.step(self.state)
+
+            # Update environment
+            next_state, reward, done, info = self.env.step(action)
+
+            # Record transition to batch
+            # On episode end, update batch infos and reset
+            for i in range(self.num_env):
+                # Record transition to buffer
+                eps_by_env[i].add(
+                    torch.as_tensor(self.state[i]),
+                    torch.as_tensor(action[i]),
+                    torch.as_tensor(reward[i]),
+                    torch.as_tensor(done[i]),
+                )
+
+                # On episode end, move from buffer to result_dict
+                if done[i]:
+                    all_episodes.append(eps_by_env[i])
+                    next_state[i] = self.env.envs[i].reset()
+                    eps_by_env[i] = Experiences()
+                    ep_count += 1
+                    if ep_count &gt;= num_episodes:
+                        break
+
+            # Update state
+            self.state = torch.tensor(next_state)
+            if self.use_gpu:
+                self.state = self.state.cuda()
+
+        # Combine experiences across all environments
+        eps = Experiences()
+        for i in range(len(all_episodes)):
+            eps.states += all_episodes[i].states
+            eps.actions += all_episodes[i].actions
+            eps.rewards += all_episodes[i].rewards
+            eps.dones += all_episodes[i].dones
+        eps.to_torch()
+        if self.use_gpu:
+            eps.to_gpu()
+
+        return eps
+
+    @torch.no_grad()
+    def generate_test_episodes(
+        self, num_episodes: int, start_seed=24
+    ) -&gt; Experiences:
+        &#34;&#34;&#34;
+        Generate episodes using a single env with seeds for reproducibility.
+        Only records states, actions, rewards.
+
+        Will return a list of torch Tensors.
+
+        Use for testing when you need to compare against other algorithms or runs.
+
+        Parameters
+        ----------
+        num_episodes: int
+            number of episodes to collectively acquire across all of the
+            environment threads
+
+        Returns
+        -------
+        Experiences (Dict[str, torch.Tensor]]):
+            {&#39;states&#39;: [], &#39;actions&#39;: [], &#39;rewards&#39;: [], &#39;dones&#39;: []}
+        &#34;&#34;&#34;
+        # Initialize batch
+        eps = Experiences()
+
+        test_env = self.env.envs[0]
+
+        ep_count = 0
+        test_env.seed(start_seed * (ep_count + 1))
+        set_seed(start_seed * (ep_count + 1))
+        test_state = torch.tensor(
+            test_env.reset().copy(), dtype=torch.float
+        ).unsqueeze(0)
+
+        if self.use_gpu:
+            test_state = test_state.cuda()
+
+        while ep_count &lt; num_episodes:
+
+            # Agent takes action
+            action = self.agent.step(test_state)
+
+            # Update environment
+            next_state, reward, done, info = test_env.step(action[0])
+
+            # Record transition to batch
+            # On episode end, update batch infos and reset
+            eps.add(
+                torch.as_tensor(test_state.squeeze()),
+                torch.as_tensor(action.squeeze()),
+                torch.as_tensor(reward),
+                torch.as_tensor(done),
+            )
+
+            if done:
+                ep_count += 1
+                test_env.seed(start_seed * (ep_count + 1))
+                set_seed(start_seed * (ep_count + 1))
+                test_state = torch.tensor(
+                    test_env.reset().copy(), dtype=torch.float
+                ).unsqueeze(0)
+            else:
+                # Update state
+                test_state = torch.tensor(
+                    next_state.copy(), dtype=torch.float
+                ).unsqueeze(0)
+
+            if self.use_gpu:
+                test_state = test_state.cuda()
+
+        eps.to_torch()
+        if self.use_gpu:
+            eps.to_gpu()
+
+        return eps</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ilpyt.runners.runner.Experiences"><code class="flex name class">
+<span>class <span class="ident">Experiences</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Initialize experiences object, which stores a stack of agent-environment
+transitions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Experiences:
+    def __init__(self) -&gt; None:
+        &#34;&#34;&#34;
+        Initialize experiences object, which stores a stack of agent-environment 
+        transitions.
+        &#34;&#34;&#34;
+        self.states = []
+        self.actions = []
+        self.rewards = []
+        self.dones = []
+
+    def add(
+        self,
+        state: torch.Tensor,
+        action: torch.Tensor,
+        reward: torch.Tensor,
+        done: torch.Tensor,
+    ) -&gt; None:
+        &#34;&#34;&#34;
+        Add a transition to the stack of transitions.
+
+        Parameters
+        ----------
+        state: torch.Tensor
+        action: torch.Tensor
+        reward: torch.Tensor
+        done: torch.Tensor
+        &#34;&#34;&#34;
+        self.states.append(state)
+        self.actions.append(action)
+        self.rewards.append(reward)
+        self.dones.append(done)
+
+    def to_torch(self) -&gt; None:
+        &#34;&#34;&#34;
+        Convert the stack of transitions from a list of torch.Tensors to a 
+        single instance of torch.Tensor.
+        &#34;&#34;&#34;
+        self.states = torch.stack(self.states)
+        self.actions = torch.stack(self.actions)
+        self.rewards = torch.tensor(self.rewards)
+        self.dones = torch.tensor(self.dones)
+
+    def to_gpu(self) -&gt; None:
+        &#34;&#34;&#34;
+        Place the experience on the GPU.
+        &#34;&#34;&#34;
+        self.states = self.states.cuda()
+        self.actions = self.actions.cuda()
+        self.rewards = self.rewards.cuda()
+        self.dones = self.dones.cuda()
+
+    def get_episode_rewards(self) -&gt; List[float]:
+        &#34;&#34;&#34;
+        Get the episode rewards.
+
+        Returns
+        -------
+        List[float]:
+            list of episode rewards
+        &#34;&#34;&#34;
+        cumulative_rewards = []
+        episode_ends = torch.where(self.dones)[0] + 1
+        for i in range(len(episode_ends)):
+            if i == 0:
+                start = 0
+            else:
+                start = episode_ends[i - 1]
+            end = episode_ends[i]
+            r = torch.sum(self.rewards[start:end]).item()
+            cumulative_rewards.append(r)
+        return cumulative_rewards</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ilpyt.runners.runner.Experiences.add"><code class="name flex">
+<span>def <span class="ident">add</span></span>(<span>self, state: torch.Tensor, action: torch.Tensor, reward: torch.Tensor, done: torch.Tensor) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add a transition to the stack of transitions.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>state</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>action</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>reward</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>done</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add(
+    self,
+    state: torch.Tensor,
+    action: torch.Tensor,
+    reward: torch.Tensor,
+    done: torch.Tensor,
+) -&gt; None:
+    &#34;&#34;&#34;
+    Add a transition to the stack of transitions.
+
+    Parameters
+    ----------
+    state: torch.Tensor
+    action: torch.Tensor
+    reward: torch.Tensor
+    done: torch.Tensor
+    &#34;&#34;&#34;
+    self.states.append(state)
+    self.actions.append(action)
+    self.rewards.append(reward)
+    self.dones.append(done)</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.runners.runner.Experiences.get_episode_rewards"><code class="name flex">
+<span>def <span class="ident">get_episode_rewards</span></span>(<span>self) ‑> List[float]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get the episode rewards.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>List[float]:</code></dt>
+<dd>list of episode rewards</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_episode_rewards(self) -&gt; List[float]:
+    &#34;&#34;&#34;
+    Get the episode rewards.
+
+    Returns
+    -------
+    List[float]:
+        list of episode rewards
+    &#34;&#34;&#34;
+    cumulative_rewards = []
+    episode_ends = torch.where(self.dones)[0] + 1
+    for i in range(len(episode_ends)):
+        if i == 0:
+            start = 0
+        else:
+            start = episode_ends[i - 1]
+        end = episode_ends[i]
+        r = torch.sum(self.rewards[start:end]).item()
+        cumulative_rewards.append(r)
+    return cumulative_rewards</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.runners.runner.Experiences.to_gpu"><code class="name flex">
+<span>def <span class="ident">to_gpu</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Place the experience on the GPU.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_gpu(self) -&gt; None:
+    &#34;&#34;&#34;
+    Place the experience on the GPU.
+    &#34;&#34;&#34;
+    self.states = self.states.cuda()
+    self.actions = self.actions.cuda()
+    self.rewards = self.rewards.cuda()
+    self.dones = self.dones.cuda()</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.runners.runner.Experiences.to_torch"><code class="name flex">
+<span>def <span class="ident">to_torch</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Convert the stack of transitions from a list of torch.Tensors to a
+single instance of torch.Tensor.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_torch(self) -&gt; None:
+    &#34;&#34;&#34;
+    Convert the stack of transitions from a list of torch.Tensors to a 
+    single instance of torch.Tensor.
+    &#34;&#34;&#34;
+    self.states = torch.stack(self.states)
+    self.actions = torch.stack(self.actions)
+    self.rewards = torch.tensor(self.rewards)
+    self.dones = torch.tensor(self.dones)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ilpyt.runners.runner.Runner"><code class="flex name class">
+<span>class <span class="ident">Runner</span></span>
+<span>(</span><span>env: <a title="ilpyt.envs.vec_env.VecEnv" href="../envs/vec_env.html#ilpyt.envs.vec_env.VecEnv">VecEnv</a>, agent: <a title="ilpyt.agents.base_agent.BaseAgent" href="../agents/base_agent.html#ilpyt.agents.base_agent.BaseAgent">BaseAgent</a>, use_gpu: bool)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The runner manages the agent and environment interaction to collect
+episodes and/or rollouts.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>env</code></strong> :&ensp;<code>VecEnv</code></dt>
+<dd>Multiprocessing compatible gym environment</dd>
+<dt><strong><code>agent</code></strong> :&ensp;<code>BaseAgent</code></dt>
+<dd>Agent to collect rollouts or episode experiences from</dd>
+<dt><strong><code>use_gpu</code></strong> :&ensp;<code>bool</code></dt>
+<dd>whether or not to use GPU, if false use CPU</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Runner:
+    def __init__(self, env: VecEnv, agent: BaseAgent, use_gpu: bool) -&gt; None:
+        &#34;&#34;&#34;
+        The runner manages the agent and environment interaction to collect
+        episodes and/or rollouts.
+
+        Parameters
+        ----------
+        env: VecEnv
+            Multiprocessing compatible gym environment
+        agent: BaseAgent
+            Agent to collect rollouts or episode experiences from
+        use_gpu: bool
+            whether or not to use GPU, if false use CPU
+        &#34;&#34;&#34;
+        self.env = env
+        self.agent = agent
+        self.num_env = self.env.num_envs
+        self.use_gpu = use_gpu
+
+        if self.use_gpu:
+            self.agent.to_gpu()
+
+        # Initialize state
+        self.state = torch.tensor(self.env.reset())
+        if self.use_gpu:
+            self.state = self.state.cuda()
+
+        # Episode statistics
+        # Each list entry corresponds to a different parallel environment.
+        self.episode_stats = {
+            &#39;reward&#39;: np.zeros(self.num_env),
+            &#39;length&#39;: np.zeros(self.num_env),
+            &#39;count&#39;: np.zeros(self.num_env),
+        }
+
+    def reset(self) -&gt; None:
+        &#34;&#34;&#34;
+        Reset the state and episode stats within the Runner.
+        &#34;&#34;&#34;
+        self.state = torch.tensor(self.env.reset())
+        if self.use_gpu:
+            self.agent.to_gpu()
+            self.state = self.state.cuda()
+        self.episode_stats = {
+            &#39;reward&#39;: np.zeros(self.num_env),
+            &#39;length&#39;: np.zeros(self.num_env),
+            &#39;count&#39;: np.zeros(self.num_env),
+        }
+
+    @torch.no_grad()
+    def generate_batch(self, rollout_steps: int) -&gt; Dict[str, torch.Tensor]:
+        &#34;&#34;&#34;
+        Generate a batch of rollouts.
+
+        Will return a dictionary with keys: states, next_states, actions,
+        rewards, dones, and infos.
+
+        - states and next_states will have a shape of (rollout_steps, num_env, state_shape).
+        - actions will have a shape of (rollout_steps, num_env, act_shape).
+        - rewards and dones will have a shape of (rollout_steps, num_env).
+        - infos will contain episode metadata -- it will be expressed as a list of dictionaries with values summarizing the episode_length and total_reward accumulated.
+
+        Parameters
+        ----------
+        rollout_steps: int
+            number of rollout steps to collect
+
+        Returns
+        -------
+        Dict[str, torch.Tensor]:
+            batch of rollouts with keys: states, next_states, actions, rewards, 
+            dones, and infos
+        &#34;&#34;&#34;
+        # Initialize batch
+        batch_size = (
+            rollout_steps,
+            self.num_env,
+        )
+        obs_shape = batch_size + self.env.observation_shape
+        if self.env.type == &#39;discrete&#39;:
+            act_shape = batch_size
+        else:
+            act_shape = batch_size + self.env.action_shape
+        batch: Dict[str, Any] = {
+            &#39;states&#39;: torch.empty(obs_shape),
+            &#39;next_states&#39;: torch.empty(obs_shape),
+            &#39;actions&#39;: torch.empty(act_shape),
+            &#39;rewards&#39;: torch.empty(batch_size),
+            &#39;dones&#39;: torch.empty(batch_size),
+            &#39;infos&#39;: [],
+        }
+
+        for step in range(rollout_steps):
+            # Agent takes action
+            action = self.agent.step(self.state)
+
+            # Update environment
+            next_state, reward, done, info = self.env.step(action)
+            # print(&#39;REWARD IN RUNNER:&#39; , reward)
+            # Record transition to batch
+            batch[&#39;states&#39;][step] = torch.as_tensor(self.state)
+            batch[&#39;next_states&#39;][step] = torch.as_tensor(next_state)
+            batch[&#39;actions&#39;][step] = torch.tensor(
+                action, dtype=torch.float, requires_grad=True
+            )
+            batch[&#39;rewards&#39;][step] = torch.as_tensor(reward)
+            batch[&#39;dones&#39;][step] = torch.as_tensor(done)
+
+            # Update episode stats
+            self.episode_stats[&#39;reward&#39;] += reward
+            self.episode_stats[&#39;length&#39;] += np.ones(self.num_env)
+            self.episode_stats[&#39;count&#39;] += done
+
+            # On episode end, update batch infos and reset
+            for i in range(self.num_env):
+                if done[i]:
+                    update_dict = {
+                        &#39;reward/%i&#39; % i: self.episode_stats[&#39;reward&#39;][i],
+                        &#39;length/%i&#39; % i: self.episode_stats[&#39;length&#39;][i],
+                    }
+                    update = [self.episode_stats[&#39;count&#39;][i], update_dict]
+                    batch[&#39;infos&#39;].append(update)
+                    self.episode_stats[&#39;reward&#39;][i] = 0
+                    self.episode_stats[&#39;length&#39;][i] = 0
+
+            # Update state
+            self.state = torch.tensor(next_state)
+            if self.use_gpu:
+                self.state = self.state.cuda()
+
+        # Batch to GPU
+        if self.use_gpu:
+            for (k, v) in batch.items():
+                if k != &#39;infos&#39;:
+                    batch[k] = v.cuda()
+
+        return batch
+
+    @torch.no_grad()
+    def generate_episodes(self, num_episodes: int) -&gt; Experiences:
+        &#34;&#34;&#34;
+        Generate episodes.
+        Only records states, actions, rewards.
+
+        Will return a list of torch Tensors.
+
+        Parameters
+        ----------
+        num_episodes: int
+            number of episodes to collectively acquire across all of the
+            environment threads
+
+        Returns
+        -------
+        Experiences (Dict[str, torch.Tensor]]):
+            {&#39;states&#39;: [], &#39;actions&#39;: [], &#39;rewards&#39;: [], &#39;dones&#39;: []}
+        &#34;&#34;&#34;
+        # Initialize batch
+        eps_by_env = [Experiences() for i in range(self.num_env)]
+        all_episodes = []
+
+        ep_count = 0
+        self.env.reset()
+        while ep_count &lt; num_episodes:
+
+            # Agent takes action
+            action = self.agent.step(self.state)
+
+            # Update environment
+            next_state, reward, done, info = self.env.step(action)
+
+            # Record transition to batch
+            # On episode end, update batch infos and reset
+            for i in range(self.num_env):
+                # Record transition to buffer
+                eps_by_env[i].add(
+                    torch.as_tensor(self.state[i]),
+                    torch.as_tensor(action[i]),
+                    torch.as_tensor(reward[i]),
+                    torch.as_tensor(done[i]),
+                )
+
+                # On episode end, move from buffer to result_dict
+                if done[i]:
+                    all_episodes.append(eps_by_env[i])
+                    next_state[i] = self.env.envs[i].reset()
+                    eps_by_env[i] = Experiences()
+                    ep_count += 1
+                    if ep_count &gt;= num_episodes:
+                        break
+
+            # Update state
+            self.state = torch.tensor(next_state)
+            if self.use_gpu:
+                self.state = self.state.cuda()
+
+        # Combine experiences across all environments
+        eps = Experiences()
+        for i in range(len(all_episodes)):
+            eps.states += all_episodes[i].states
+            eps.actions += all_episodes[i].actions
+            eps.rewards += all_episodes[i].rewards
+            eps.dones += all_episodes[i].dones
+        eps.to_torch()
+        if self.use_gpu:
+            eps.to_gpu()
+
+        return eps
+
+    @torch.no_grad()
+    def generate_test_episodes(
+        self, num_episodes: int, start_seed=24
+    ) -&gt; Experiences:
+        &#34;&#34;&#34;
+        Generate episodes using a single env with seeds for reproducibility.
+        Only records states, actions, rewards.
+
+        Will return a list of torch Tensors.
+
+        Use for testing when you need to compare against other algorithms or runs.
+
+        Parameters
+        ----------
+        num_episodes: int
+            number of episodes to collectively acquire across all of the
+            environment threads
+
+        Returns
+        -------
+        Experiences (Dict[str, torch.Tensor]]):
+            {&#39;states&#39;: [], &#39;actions&#39;: [], &#39;rewards&#39;: [], &#39;dones&#39;: []}
+        &#34;&#34;&#34;
+        # Initialize batch
+        eps = Experiences()
+
+        test_env = self.env.envs[0]
+
+        ep_count = 0
+        test_env.seed(start_seed * (ep_count + 1))
+        set_seed(start_seed * (ep_count + 1))
+        test_state = torch.tensor(
+            test_env.reset().copy(), dtype=torch.float
+        ).unsqueeze(0)
+
+        if self.use_gpu:
+            test_state = test_state.cuda()
+
+        while ep_count &lt; num_episodes:
+
+            # Agent takes action
+            action = self.agent.step(test_state)
+
+            # Update environment
+            next_state, reward, done, info = test_env.step(action[0])
+
+            # Record transition to batch
+            # On episode end, update batch infos and reset
+            eps.add(
+                torch.as_tensor(test_state.squeeze()),
+                torch.as_tensor(action.squeeze()),
+                torch.as_tensor(reward),
+                torch.as_tensor(done),
+            )
+
+            if done:
+                ep_count += 1
+                test_env.seed(start_seed * (ep_count + 1))
+                set_seed(start_seed * (ep_count + 1))
+                test_state = torch.tensor(
+                    test_env.reset().copy(), dtype=torch.float
+                ).unsqueeze(0)
+            else:
+                # Update state
+                test_state = torch.tensor(
+                    next_state.copy(), dtype=torch.float
+                ).unsqueeze(0)
+
+            if self.use_gpu:
+                test_state = test_state.cuda()
+
+        eps.to_torch()
+        if self.use_gpu:
+            eps.to_gpu()
+
+        return eps</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ilpyt.runners.runner.Runner.generate_batch"><code class="name flex">
+<span>def <span class="ident">generate_batch</span></span>(<span>self, rollout_steps: int) ‑> Dict[str, torch.Tensor]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate a batch of rollouts.</p>
+<p>Will return a dictionary with keys: states, next_states, actions,
+rewards, dones, and infos.</p>
+<ul>
+<li>states and next_states will have a shape of (rollout_steps, num_env, state_shape).</li>
+<li>actions will have a shape of (rollout_steps, num_env, act_shape).</li>
+<li>rewards and dones will have a shape of (rollout_steps, num_env).</li>
+<li>infos will contain episode metadata &ndash; it will be expressed as a list of dictionaries with values summarizing the episode_length and total_reward accumulated.</li>
+</ul>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>rollout_steps</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of rollout steps to collect</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Dict[str, torch.Tensor]:</code></dt>
+<dd>batch of rollouts with keys: states, next_states, actions, rewards,
+dones, and infos</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@torch.no_grad()
+def generate_batch(self, rollout_steps: int) -&gt; Dict[str, torch.Tensor]:
+    &#34;&#34;&#34;
+    Generate a batch of rollouts.
+
+    Will return a dictionary with keys: states, next_states, actions,
+    rewards, dones, and infos.
+
+    - states and next_states will have a shape of (rollout_steps, num_env, state_shape).
+    - actions will have a shape of (rollout_steps, num_env, act_shape).
+    - rewards and dones will have a shape of (rollout_steps, num_env).
+    - infos will contain episode metadata -- it will be expressed as a list of dictionaries with values summarizing the episode_length and total_reward accumulated.
+
+    Parameters
+    ----------
+    rollout_steps: int
+        number of rollout steps to collect
+
+    Returns
+    -------
+    Dict[str, torch.Tensor]:
+        batch of rollouts with keys: states, next_states, actions, rewards, 
+        dones, and infos
+    &#34;&#34;&#34;
+    # Initialize batch
+    batch_size = (
+        rollout_steps,
+        self.num_env,
+    )
+    obs_shape = batch_size + self.env.observation_shape
+    if self.env.type == &#39;discrete&#39;:
+        act_shape = batch_size
+    else:
+        act_shape = batch_size + self.env.action_shape
+    batch: Dict[str, Any] = {
+        &#39;states&#39;: torch.empty(obs_shape),
+        &#39;next_states&#39;: torch.empty(obs_shape),
+        &#39;actions&#39;: torch.empty(act_shape),
+        &#39;rewards&#39;: torch.empty(batch_size),
+        &#39;dones&#39;: torch.empty(batch_size),
+        &#39;infos&#39;: [],
+    }
+
+    for step in range(rollout_steps):
+        # Agent takes action
+        action = self.agent.step(self.state)
+
+        # Update environment
+        next_state, reward, done, info = self.env.step(action)
+        # print(&#39;REWARD IN RUNNER:&#39; , reward)
+        # Record transition to batch
+        batch[&#39;states&#39;][step] = torch.as_tensor(self.state)
+        batch[&#39;next_states&#39;][step] = torch.as_tensor(next_state)
+        batch[&#39;actions&#39;][step] = torch.tensor(
+            action, dtype=torch.float, requires_grad=True
+        )
+        batch[&#39;rewards&#39;][step] = torch.as_tensor(reward)
+        batch[&#39;dones&#39;][step] = torch.as_tensor(done)
+
+        # Update episode stats
+        self.episode_stats[&#39;reward&#39;] += reward
+        self.episode_stats[&#39;length&#39;] += np.ones(self.num_env)
+        self.episode_stats[&#39;count&#39;] += done
+
+        # On episode end, update batch infos and reset
+        for i in range(self.num_env):
+            if done[i]:
+                update_dict = {
+                    &#39;reward/%i&#39; % i: self.episode_stats[&#39;reward&#39;][i],
+                    &#39;length/%i&#39; % i: self.episode_stats[&#39;length&#39;][i],
+                }
+                update = [self.episode_stats[&#39;count&#39;][i], update_dict]
+                batch[&#39;infos&#39;].append(update)
+                self.episode_stats[&#39;reward&#39;][i] = 0
+                self.episode_stats[&#39;length&#39;][i] = 0
+
+        # Update state
+        self.state = torch.tensor(next_state)
+        if self.use_gpu:
+            self.state = self.state.cuda()
+
+    # Batch to GPU
+    if self.use_gpu:
+        for (k, v) in batch.items():
+            if k != &#39;infos&#39;:
+                batch[k] = v.cuda()
+
+    return batch</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.runners.runner.Runner.generate_episodes"><code class="name flex">
+<span>def <span class="ident">generate_episodes</span></span>(<span>self, num_episodes: int) ‑> <a title="ilpyt.runners.runner.Experiences" href="#ilpyt.runners.runner.Experiences">Experiences</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate episodes.
+Only records states, actions, rewards.</p>
+<p>Will return a list of torch Tensors.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>num_episodes</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of episodes to collectively acquire across all of the
+environment threads</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Experiences (Dict[str, torch.Tensor]]):</code></dt>
+<dd>{'states': [], 'actions': [], 'rewards': [], 'dones': []}</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@torch.no_grad()
+def generate_episodes(self, num_episodes: int) -&gt; Experiences:
+    &#34;&#34;&#34;
+    Generate episodes.
+    Only records states, actions, rewards.
+
+    Will return a list of torch Tensors.
+
+    Parameters
+    ----------
+    num_episodes: int
+        number of episodes to collectively acquire across all of the
+        environment threads
+
+    Returns
+    -------
+    Experiences (Dict[str, torch.Tensor]]):
+        {&#39;states&#39;: [], &#39;actions&#39;: [], &#39;rewards&#39;: [], &#39;dones&#39;: []}
+    &#34;&#34;&#34;
+    # Initialize batch
+    eps_by_env = [Experiences() for i in range(self.num_env)]
+    all_episodes = []
+
+    ep_count = 0
+    self.env.reset()
+    while ep_count &lt; num_episodes:
+
+        # Agent takes action
+        action = self.agent.step(self.state)
+
+        # Update environment
+        next_state, reward, done, info = self.env.step(action)
+
+        # Record transition to batch
+        # On episode end, update batch infos and reset
+        for i in range(self.num_env):
+            # Record transition to buffer
+            eps_by_env[i].add(
+                torch.as_tensor(self.state[i]),
+                torch.as_tensor(action[i]),
+                torch.as_tensor(reward[i]),
+                torch.as_tensor(done[i]),
+            )
+
+            # On episode end, move from buffer to result_dict
+            if done[i]:
+                all_episodes.append(eps_by_env[i])
+                next_state[i] = self.env.envs[i].reset()
+                eps_by_env[i] = Experiences()
+                ep_count += 1
+                if ep_count &gt;= num_episodes:
+                    break
+
+        # Update state
+        self.state = torch.tensor(next_state)
+        if self.use_gpu:
+            self.state = self.state.cuda()
+
+    # Combine experiences across all environments
+    eps = Experiences()
+    for i in range(len(all_episodes)):
+        eps.states += all_episodes[i].states
+        eps.actions += all_episodes[i].actions
+        eps.rewards += all_episodes[i].rewards
+        eps.dones += all_episodes[i].dones
+    eps.to_torch()
+    if self.use_gpu:
+        eps.to_gpu()
+
+    return eps</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.runners.runner.Runner.generate_test_episodes"><code class="name flex">
+<span>def <span class="ident">generate_test_episodes</span></span>(<span>self, num_episodes: int, start_seed=24) ‑> <a title="ilpyt.runners.runner.Experiences" href="#ilpyt.runners.runner.Experiences">Experiences</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate episodes using a single env with seeds for reproducibility.
+Only records states, actions, rewards.</p>
+<p>Will return a list of torch Tensors.</p>
+<p>Use for testing when you need to compare against other algorithms or runs.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>num_episodes</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of episodes to collectively acquire across all of the
+environment threads</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Experiences (Dict[str, torch.Tensor]]):</code></dt>
+<dd>{'states': [], 'actions': [], 'rewards': [], 'dones': []}</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@torch.no_grad()
+def generate_test_episodes(
+    self, num_episodes: int, start_seed=24
+) -&gt; Experiences:
+    &#34;&#34;&#34;
+    Generate episodes using a single env with seeds for reproducibility.
+    Only records states, actions, rewards.
+
+    Will return a list of torch Tensors.
+
+    Use for testing when you need to compare against other algorithms or runs.
+
+    Parameters
+    ----------
+    num_episodes: int
+        number of episodes to collectively acquire across all of the
+        environment threads
+
+    Returns
+    -------
+    Experiences (Dict[str, torch.Tensor]]):
+        {&#39;states&#39;: [], &#39;actions&#39;: [], &#39;rewards&#39;: [], &#39;dones&#39;: []}
+    &#34;&#34;&#34;
+    # Initialize batch
+    eps = Experiences()
+
+    test_env = self.env.envs[0]
+
+    ep_count = 0
+    test_env.seed(start_seed * (ep_count + 1))
+    set_seed(start_seed * (ep_count + 1))
+    test_state = torch.tensor(
+        test_env.reset().copy(), dtype=torch.float
+    ).unsqueeze(0)
+
+    if self.use_gpu:
+        test_state = test_state.cuda()
+
+    while ep_count &lt; num_episodes:
+
+        # Agent takes action
+        action = self.agent.step(test_state)
+
+        # Update environment
+        next_state, reward, done, info = test_env.step(action[0])
+
+        # Record transition to batch
+        # On episode end, update batch infos and reset
+        eps.add(
+            torch.as_tensor(test_state.squeeze()),
+            torch.as_tensor(action.squeeze()),
+            torch.as_tensor(reward),
+            torch.as_tensor(done),
+        )
+
+        if done:
+            ep_count += 1
+            test_env.seed(start_seed * (ep_count + 1))
+            set_seed(start_seed * (ep_count + 1))
+            test_state = torch.tensor(
+                test_env.reset().copy(), dtype=torch.float
+            ).unsqueeze(0)
+        else:
+            # Update state
+            test_state = torch.tensor(
+                next_state.copy(), dtype=torch.float
+            ).unsqueeze(0)
+
+        if self.use_gpu:
+            test_state = test_state.cuda()
+
+    eps.to_torch()
+    if self.use_gpu:
+        eps.to_gpu()
+
+    return eps</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.runners.runner.Runner.reset"><code class="name flex">
+<span>def <span class="ident">reset</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reset the state and episode stats within the Runner.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reset(self) -&gt; None:
+    &#34;&#34;&#34;
+    Reset the state and episode stats within the Runner.
+    &#34;&#34;&#34;
+    self.state = torch.tensor(self.env.reset())
+    if self.use_gpu:
+        self.agent.to_gpu()
+        self.state = self.state.cuda()
+    self.episode_stats = {
+        &#39;reward&#39;: np.zeros(self.num_env),
+        &#39;length&#39;: np.zeros(self.num_env),
+        &#39;count&#39;: np.zeros(self.num_env),
+    }</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ilpyt.runners" href="index.html">ilpyt.runners</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ilpyt.runners.runner.Experiences" href="#ilpyt.runners.runner.Experiences">Experiences</a></code></h4>
+<ul class="">
+<li><code><a title="ilpyt.runners.runner.Experiences.add" href="#ilpyt.runners.runner.Experiences.add">add</a></code></li>
+<li><code><a title="ilpyt.runners.runner.Experiences.get_episode_rewards" href="#ilpyt.runners.runner.Experiences.get_episode_rewards">get_episode_rewards</a></code></li>
+<li><code><a title="ilpyt.runners.runner.Experiences.to_gpu" href="#ilpyt.runners.runner.Experiences.to_gpu">to_gpu</a></code></li>
+<li><code><a title="ilpyt.runners.runner.Experiences.to_torch" href="#ilpyt.runners.runner.Experiences.to_torch">to_torch</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ilpyt.runners.runner.Runner" href="#ilpyt.runners.runner.Runner">Runner</a></code></h4>
+<ul class="">
+<li><code><a title="ilpyt.runners.runner.Runner.generate_batch" href="#ilpyt.runners.runner.Runner.generate_batch">generate_batch</a></code></li>
+<li><code><a title="ilpyt.runners.runner.Runner.generate_episodes" href="#ilpyt.runners.runner.Runner.generate_episodes">generate_episodes</a></code></li>
+<li><code><a title="ilpyt.runners.runner.Runner.generate_test_episodes" href="#ilpyt.runners.runner.Runner.generate_test_episodes">generate_test_episodes</a></code></li>
+<li><code><a title="ilpyt.runners.runner.Runner.reset" href="#ilpyt.runners.runner.Runner.reset">reset</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

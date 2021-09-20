@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ilpyt.nets.base_net API documentation</title>
+<meta name="description" content="`BaseNetwork` is the abstract class for a network. Networks parameterize
+important functions during learning - most often, the agent policy …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ilpyt.nets.base_net</code></h1>
+</header>
+<section id="section-intro">
+<p><code><a title="ilpyt.nets.base_net.BaseNetwork" href="#ilpyt.nets.base_net.BaseNetwork">BaseNetwork</a></code> is the abstract class for a network. Networks parameterize
+important functions during learning - most often, the agent policy.</p>
+<p>To create a custom network, simply extend <code><a title="ilpyt.nets.base_net.BaseNetwork" href="#ilpyt.nets.base_net.BaseNetwork">BaseNetwork</a></code>. The <code><a title="ilpyt.nets.base_net.BaseNetwork" href="#ilpyt.nets.base_net.BaseNetwork">BaseNetwork</a></code> API
+requires you to override the <code>initialize</code>, <code>get_action</code>, and <code>forward</code> methods.</p>
+<ul>
+<li><code>initalize</code> sets <code>network</code> class variables, such as the network layers</li>
+<li><code>get_action</code> draws from a torch distribution to perform an action</li>
+<li><code>forward</code> computes a forward pass of the network</li>
+</ul>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+`BaseNetwork` is the abstract class for a network. Networks parameterize 
+important functions during learning - most often, the agent policy.
+
+To create a custom network, simply extend `BaseNetwork`. The `BaseNetwork` API 
+requires you to override the `initialize`, `get_action`, and `forward` methods.
+
+- `initalize` sets `network` class variables, such as the network layers
+- `get_action` draws from a torch distribution to perform an action
+- `forward` computes a forward pass of the network
+&#34;&#34;&#34;
+
+from abc import abstractmethod
+from typing import Any, Tuple
+
+import torch
+from torch.distributions import Distribution
+
+
+class BaseNetwork(torch.nn.Module):
+    def __init__(self, **kwargs: Any) -&gt; None:
+        &#34;&#34;&#34;
+        Parameters
+        ----------
+        **kwargs:
+            arbitrary keyword arguments. Will be passed to the `initialize` and 
+            `setup_experiment` functions
+        &#34;&#34;&#34;
+        super(BaseNetwork, self).__init__()
+        self.initialize(**kwargs)
+
+    @abstractmethod
+    def initialize(self, input_shape: tuple, output_shape: int) -&gt; None:
+        &#34;&#34;&#34;
+        Perform network initialization. Build the network layers here. 
+        Override this method when extending the `BaseNetwork` class.
+
+        Parameters
+        ----------
+        input_shape: tuple
+            shape of input to network
+        output_shape: int
+            shape of output of network
+        &#34;&#34;&#34;
+        pass
+
+    @abstractmethod
+    def get_action(self, x: torch.Tensor) -&gt; Tuple[Distribution, torch.Tensor]:
+        &#34;&#34;&#34;
+        Some algorithms will require us to draw from a distribution to perform 
+        an action. Override this method when extending the `BaseNetwork` class.
+
+        Parameters
+        ----------
+        x: torch.Tensor
+            input tensor to network
+
+        Returns
+        -------
+        torch.distributions.Distribution:
+            distribution to sample actions from
+        torch.Tensor:
+            action tensor, sampled from distribution
+        &#34;&#34;&#34;
+        pass
+
+    @abstractmethod
+    def forward(self, x: torch.Tensor) -&gt; torch.Tensor:
+        &#34;&#34;&#34;
+        Forward pass of the network. Override this method when extending the 
+        `BaseNetwork` class.
+
+        Parameters
+        ----------
+        x: torch.Tensor
+            input tensor to network
+
+        Returns
+        -------
+        torch.Tensor:
+            output of network
+        &#34;&#34;&#34;
+        pass
+
+
+def get_activation_layer(name: str) -&gt; torch.nn.Module:
+    &#34;&#34;&#34;
+    Get an activation layer with the given name.
+
+    Parameters
+    -----------
+    name: str
+        activation layer name, choose from &#39;relu&#39; or &#39;tanh&#39;
+
+    Returns
+    -------
+    torch.nn.Module:
+        activation layer
+
+    Raises
+    ------
+    ValueError:
+        if an unsupported activation layer is specified
+    &#34;&#34;&#34;
+    if name == &#39;relu&#39;:
+        return torch.nn.ReLU()
+    elif name == &#39;tanh&#39;:
+        return torch.nn.Tanh()
+    else:
+        raise ValueError(&#39;Unsupported activation layer chosen.&#39;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="ilpyt.nets.base_net.get_activation_layer"><code class="name flex">
+<span>def <span class="ident">get_activation_layer</span></span>(<span>name: str) ‑> torch.nn.modules.module.Module</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get an activation layer with the given name.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>activation layer name, choose from 'relu' or 'tanh'</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>torch.nn.Module:</code></dt>
+<dd>activation layer</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>if an unsupported activation layer is specified</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_activation_layer(name: str) -&gt; torch.nn.Module:
+    &#34;&#34;&#34;
+    Get an activation layer with the given name.
+
+    Parameters
+    -----------
+    name: str
+        activation layer name, choose from &#39;relu&#39; or &#39;tanh&#39;
+
+    Returns
+    -------
+    torch.nn.Module:
+        activation layer
+
+    Raises
+    ------
+    ValueError:
+        if an unsupported activation layer is specified
+    &#34;&#34;&#34;
+    if name == &#39;relu&#39;:
+        return torch.nn.ReLU()
+    elif name == &#39;tanh&#39;:
+        return torch.nn.Tanh()
+    else:
+        raise ValueError(&#39;Unsupported activation layer chosen.&#39;)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ilpyt.nets.base_net.BaseNetwork"><code class="flex name class">
+<span>class <span class="ident">BaseNetwork</span></span>
+<span>(</span><span>**kwargs: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Base class for all neural network modules.</p>
+<p>Your models should also subclass this class.</p>
+<p>Modules can also contain other Modules, allowing to nest them in
+a tree structure. You can assign the submodules as regular attributes::</p>
+<pre><code>import torch.nn as nn
+import torch.nn.functional as F
+
+class Model(nn.Module):
+    def __init__(self):
+        super(Model, self).__init__()
+        self.conv1 = nn.Conv2d(1, 20, 5)
+        self.conv2 = nn.Conv2d(20, 20, 5)
+
+    def forward(self, x):
+        x = F.relu(self.conv1(x))
+        return F.relu(self.conv2(x))
+</code></pre>
+<p>Submodules assigned in this way will be registered, and will have their
+parameters converted too when you call :meth:<code>to</code>, etc.</p>
+<p>:ivar training: Boolean represents whether this module is in training or
+evaluation mode.
+:vartype training: bool</p>
+<h2 id="parameters">Parameters</h2>
+<p>**kwargs:
+arbitrary keyword arguments. Will be passed to the <code>initialize</code> and
+<code>setup_experiment</code> functions</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BaseNetwork(torch.nn.Module):
+    def __init__(self, **kwargs: Any) -&gt; None:
+        &#34;&#34;&#34;
+        Parameters
+        ----------
+        **kwargs:
+            arbitrary keyword arguments. Will be passed to the `initialize` and 
+            `setup_experiment` functions
+        &#34;&#34;&#34;
+        super(BaseNetwork, self).__init__()
+        self.initialize(**kwargs)
+
+    @abstractmethod
+    def initialize(self, input_shape: tuple, output_shape: int) -&gt; None:
+        &#34;&#34;&#34;
+        Perform network initialization. Build the network layers here. 
+        Override this method when extending the `BaseNetwork` class.
+
+        Parameters
+        ----------
+        input_shape: tuple
+            shape of input to network
+        output_shape: int
+            shape of output of network
+        &#34;&#34;&#34;
+        pass
+
+    @abstractmethod
+    def get_action(self, x: torch.Tensor) -&gt; Tuple[Distribution, torch.Tensor]:
+        &#34;&#34;&#34;
+        Some algorithms will require us to draw from a distribution to perform 
+        an action. Override this method when extending the `BaseNetwork` class.
+
+        Parameters
+        ----------
+        x: torch.Tensor
+            input tensor to network
+
+        Returns
+        -------
+        torch.distributions.Distribution:
+            distribution to sample actions from
+        torch.Tensor:
+            action tensor, sampled from distribution
+        &#34;&#34;&#34;
+        pass
+
+    @abstractmethod
+    def forward(self, x: torch.Tensor) -&gt; torch.Tensor:
+        &#34;&#34;&#34;
+        Forward pass of the network. Override this method when extending the 
+        `BaseNetwork` class.
+
+        Parameters
+        ----------
+        x: torch.Tensor
+            input tensor to network
+
+        Returns
+        -------
+        torch.Tensor:
+            output of network
+        &#34;&#34;&#34;
+        pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>torch.nn.modules.module.Module</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="ilpyt.nets.net1d.ContinuousNetwork1D" href="net1d.html#ilpyt.nets.net1d.ContinuousNetwork1D">ContinuousNetwork1D</a></li>
+<li><a title="ilpyt.nets.net1d.DiscreteNetwork1D" href="net1d.html#ilpyt.nets.net1d.DiscreteNetwork1D">DiscreteNetwork1D</a></li>
+<li><a title="ilpyt.nets.net2d.ContinuousNetwork2D" href="net2d.html#ilpyt.nets.net2d.ContinuousNetwork2D">ContinuousNetwork2D</a></li>
+<li><a title="ilpyt.nets.net2d.DiscreteNetwork2D" href="net2d.html#ilpyt.nets.net2d.DiscreteNetwork2D">DiscreteNetwork2D</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="ilpyt.nets.base_net.BaseNetwork.dump_patches"><code class="name">var <span class="ident">dump_patches</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ilpyt.nets.base_net.BaseNetwork.training"><code class="name">var <span class="ident">training</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="ilpyt.nets.base_net.BaseNetwork.forward"><code class="name flex">
+<span>def <span class="ident">forward</span></span>(<span>self, x: torch.Tensor) ‑> torch.Tensor</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Forward pass of the network. Override this method when extending the
+<code><a title="ilpyt.nets.base_net.BaseNetwork" href="#ilpyt.nets.base_net.BaseNetwork">BaseNetwork</a></code> class.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>input tensor to network</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>torch.Tensor:</code></dt>
+<dd>output of network</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+def forward(self, x: torch.Tensor) -&gt; torch.Tensor:
+    &#34;&#34;&#34;
+    Forward pass of the network. Override this method when extending the 
+    `BaseNetwork` class.
+
+    Parameters
+    ----------
+    x: torch.Tensor
+        input tensor to network
+
+    Returns
+    -------
+    torch.Tensor:
+        output of network
+    &#34;&#34;&#34;
+    pass</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.nets.base_net.BaseNetwork.get_action"><code class="name flex">
+<span>def <span class="ident">get_action</span></span>(<span>self, x: torch.Tensor) ‑> Tuple[torch.distributions.distribution.Distribution, torch.Tensor]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Some algorithms will require us to draw from a distribution to perform
+an action. Override this method when extending the <code><a title="ilpyt.nets.base_net.BaseNetwork" href="#ilpyt.nets.base_net.BaseNetwork">BaseNetwork</a></code> class.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>input tensor to network</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>torch.distributions.Distribution:</code></dt>
+<dd>distribution to sample actions from</dd>
+<dt><code>torch.Tensor:</code></dt>
+<dd>action tensor, sampled from distribution</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+def get_action(self, x: torch.Tensor) -&gt; Tuple[Distribution, torch.Tensor]:
+    &#34;&#34;&#34;
+    Some algorithms will require us to draw from a distribution to perform 
+    an action. Override this method when extending the `BaseNetwork` class.
+
+    Parameters
+    ----------
+    x: torch.Tensor
+        input tensor to network
+
+    Returns
+    -------
+    torch.distributions.Distribution:
+        distribution to sample actions from
+    torch.Tensor:
+        action tensor, sampled from distribution
+    &#34;&#34;&#34;
+    pass</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.nets.base_net.BaseNetwork.initialize"><code class="name flex">
+<span>def <span class="ident">initialize</span></span>(<span>self, input_shape: tuple, output_shape: int) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Perform network initialization. Build the network layers here.
+Override this method when extending the <code><a title="ilpyt.nets.base_net.BaseNetwork" href="#ilpyt.nets.base_net.BaseNetwork">BaseNetwork</a></code> class.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>input_shape</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>shape of input to network</dd>
+<dt><strong><code>output_shape</code></strong> :&ensp;<code>int</code></dt>
+<dd>shape of output of network</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+def initialize(self, input_shape: tuple, output_shape: int) -&gt; None:
+    &#34;&#34;&#34;
+    Perform network initialization. Build the network layers here. 
+    Override this method when extending the `BaseNetwork` class.
+
+    Parameters
+    ----------
+    input_shape: tuple
+        shape of input to network
+    output_shape: int
+        shape of output of network
+    &#34;&#34;&#34;
+    pass</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ilpyt.nets" href="index.html">ilpyt.nets</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="ilpyt.nets.base_net.get_activation_layer" href="#ilpyt.nets.base_net.get_activation_layer">get_activation_layer</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ilpyt.nets.base_net.BaseNetwork" href="#ilpyt.nets.base_net.BaseNetwork">BaseNetwork</a></code></h4>
+<ul class="">
+<li><code><a title="ilpyt.nets.base_net.BaseNetwork.dump_patches" href="#ilpyt.nets.base_net.BaseNetwork.dump_patches">dump_patches</a></code></li>
+<li><code><a title="ilpyt.nets.base_net.BaseNetwork.forward" href="#ilpyt.nets.base_net.BaseNetwork.forward">forward</a></code></li>
+<li><code><a title="ilpyt.nets.base_net.BaseNetwork.get_action" href="#ilpyt.nets.base_net.BaseNetwork.get_action">get_action</a></code></li>
+<li><code><a title="ilpyt.nets.base_net.BaseNetwork.initialize" href="#ilpyt.nets.base_net.BaseNetwork.initialize">initialize</a></code></li>
+<li><code><a title="ilpyt.nets.base_net.BaseNetwork.training" href="#ilpyt.nets.base_net.BaseNetwork.training">training</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

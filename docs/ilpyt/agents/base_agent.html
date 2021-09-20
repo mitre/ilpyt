@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ilpyt.agents.base_agent API documentation</title>
+<meta name="description" content="`BaseAgent` is the abstract class for an agent. An agent&#39;s role during learning
+is to coordinate the policy learning and execution. Here, the policy …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ilpyt.agents.base_agent</code></h1>
+</header>
+<section id="section-intro">
+<p><code><a title="ilpyt.agents.base_agent.BaseAgent" href="#ilpyt.agents.base_agent.BaseAgent">BaseAgent</a></code> is the abstract class for an agent. An agent's role during learning
+is to coordinate the policy learning and execution. Here, the policy refers to
+a function (in this case, a deep neural network), which maps states to actions.</p>
+<p>To create a custom agent, simply extend <code><a title="ilpyt.agents.base_agent.BaseAgent" href="#ilpyt.agents.base_agent.BaseAgent">BaseAgent</a></code>. The <code><a title="ilpyt.agents.base_agent.BaseAgent" href="#ilpyt.agents.base_agent.BaseAgent">BaseAgent</a></code> API
+requires you to override the <code>initialize</code>, <code>step</code> and <code>update</code> methods.</p>
+<ul>
+<li><code>initalize</code> sets <code>agent</code> class variables, such as the agent optimizers and
+policy functions.</li>
+<li><code>step</code> ingests a state and outputs an action, </li>
+<li><code>update</code> ingests a batch of transitions to update the policy weights.</li>
+</ul>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+`BaseAgent` is the abstract class for an agent. An agent&#39;s role during learning 
+is to coordinate the policy learning and execution. Here, the policy refers to 
+a function (in this case, a deep neural network), which maps states to actions.
+
+To create a custom agent, simply extend `BaseAgent`. The `BaseAgent` API 
+requires you to override the `initialize`, `step` and `update` methods.
+
+- `initalize` sets `agent` class variables, such as the agent optimizers and 
+policy functions.
+- `step` ingests a state and outputs an action, 
+- `update` ingests a batch of transitions to update the policy weights. 
+&#34;&#34;&#34;
+import logging
+import os
+from abc import ABCMeta, abstractmethod
+from glob import glob
+from typing import Dict
+
+import numpy as np
+import torch
+
+
+class BaseAgent(metaclass=ABCMeta):
+    def __init__(self, **kwargs):
+        &#34;&#34;&#34;
+        By default, the agent will be in `train` mode and be configured to use 
+        the `cpu` for `step` and `update` calls.
+
+        Parameters
+        ----------
+        **kwargs:
+            arbitrary keyword arguments that will be passed to the `initialize` function
+        &#34;&#34;&#34;
+        self.mode = &#39;train&#39;
+        self.device = &#39;cpu&#39;
+        self.nets = {}  # Instantiate this in the initialize function.
+        self.initialize(**kwargs)
+
+    @abstractmethod
+    def initialize(self) -&gt; None:
+        &#34;&#34;&#34;
+        Perform agent initialization. This could include setting class variables 
+        for agent optimizers, agent networks, and other important values. 
+        Override this method when extending the `BaseAgent` class.
+
+        Make sure to add all the agent networks to a `self.nets` class variable 
+        in a dictionary format, where the key is a string containing the network 
+        name and the value is the network instance (an extension of the 
+        `nets.base_net.BaseNetwork` class). The `self.nets` class variable will 
+        become important when we `save` and `load` network weights.
+
+        Parameters
+        ----------
+        **kwargs:
+            arbitrary keyword arguments
+        &#34;&#34;&#34;
+        pass
+
+    @abstractmethod
+    @torch.no_grad()
+    def step(self, state: torch.Tensor) -&gt; np.ndarray:
+        &#34;&#34;&#34;
+        Have the agent take an action in the environment. Override this method 
+        when extending the `BaseAgent` class, and be sure to apply the 
+        `torch.no_grad()` decorator.
+
+        Parameters
+        ----------
+        state: torch.Tensor
+            batch of environment state vectors, which will be of shape 
+            (batch_size, state_shape)
+
+        Returns
+        -------
+        np.ndarray:
+            batch of selected actions, which will be of shape 
+            (batch_size, action_shape)
+        &#34;&#34;&#34;
+        pass
+
+    @abstractmethod
+    def update(self, batch: Dict[str, torch.Tensor]) -&gt; Dict[str, float]:
+        &#34;&#34;&#34;
+        Update the agent policy according to a batch of transitions. Override 
+        this method when extending the `BaseAgent` class.
+
+        Parameters
+        ----------
+        batch: Dict[str, torch.Tensor]
+            batch of transitions. Keys for the dictionary at a minimum will 
+            include `states` and `actions`, but may also include `rewards` and 
+            other values needed for the policy update
+
+        Returns
+        -------
+        Dict[str, float]:
+            losses for the update step, key strings and loss values can be 
+            automatically recorded to TensorBoard (see 
+            `algos.BaseAlgorithm.log`) function for more details
+        &#34;&#34;&#34;
+        pass
+
+    def save(self, save_path: str, step: int, keep: int = 3) -&gt; None:
+        &#34;&#34;&#34;
+        Save the agent network(s) weights, according to `self.nets`. All 
+        networks listed in the `nets` attribute are saved according to the 
+        network name (key in the `nets` attribute dictionary) and training 
+        step: `&lt;save_path&gt;/&lt;net_name&gt;_&lt;step&gt;.pth`.
+
+        We keep only the `keep` most recent iterations of the network weights.
+
+        Parameters
+        ----------
+        save_path: str
+            path to directory to save the network weights
+        step: int
+            current training step
+        keep: int, default = 3
+            number of most recent network weights to keep
+        &#34;&#34;&#34;
+        if self.nets:
+            for (name, net) in self.nets.items():
+                dst = os.path.join(save_path, &#39;%s_%i.pth&#39; % (name, step))
+                torch.save(net.state_dict(), dst)
+
+            # Remove old files
+            num_keep = keep * len(self.nets)
+            weight_files = glob(os.path.join(save_path, &#34;*.pth&#34;))
+            old_weight_files = sorted(weight_files, key=os.path.getctime)[
+                :-num_keep
+            ]
+            for f in old_weight_files:
+                os.remove(f)
+
+    def load(self, load_path: str, save_num=-1) -&gt; None:
+        &#34;&#34;&#34;
+        Load the agent network(s) weights. Will load the most recent network 
+        weight(s) from the `load_path` according to file creation time. Expects 
+        weights in `*.pth` format.
+
+        Parameters
+        ----------
+        load_path: str
+            path to directory with network weights
+        save_num: int
+            number corresponding to a saved model. If -1, use most recent
+        &#34;&#34;&#34;
+
+        path_str = (
+            &#39;%s*.pth&#39; if save_num == -1 else &#39;%s_&#39; + str(save_num) + &#39;.pth&#39;
+        )
+
+        for (name, net) in self.nets.items():
+            weight_files = glob(os.path.join(load_path, path_str % name))
+            if len(weight_files) == 0:
+                logging.error(&#39;Could not load weights from %s.&#39; % load_path)
+                exit()
+            most_recent_weights = sorted(weight_files, key=os.path.getctime)[
+                -1
+            ]
+            net.load_state_dict(torch.load(most_recent_weights))
+            logging.info(&#34;Loaded %s.&#34; % most_recent_weights)
+
+    def to_gpu(self) -&gt; None:
+        &#34;&#34;&#34;
+        Place agent `self.nets` on the GPU.
+        &#34;&#34;&#34;
+        self.device = &#39;gpu&#39;
+        for (name, net) in self.nets.items():
+            net = net.cuda()
+
+    def to_cpu(self) -&gt; None:
+        &#34;&#34;&#34;
+        Place agent `self.nets` on the CPU.
+        &#34;&#34;&#34;
+        self.device = &#39;cpu&#39;
+        for (name, net) in self.nets.items():
+            net = net.cpu()
+
+    def set_train(self) -&gt; None:
+        &#34;&#34;&#34;
+        Set agent `self.nets` to training mode.
+        &#34;&#34;&#34;
+        self.mode = &#39;train&#39;
+        for (name, net) in self.nets.items():
+            net = net.train()
+
+    def set_test(self) -&gt; None:
+        &#34;&#34;&#34;
+        Set agent `self.nets` to evaluation mode.
+        &#34;&#34;&#34;
+        self.mode = &#39;test&#39;
+        for (name, net) in self.nets.items():
+            net = net.eval()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ilpyt.agents.base_agent.BaseAgent"><code class="flex name class">
+<span>class <span class="ident">BaseAgent</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>By default, the agent will be in <code>train</code> mode and be configured to use
+the <code>cpu</code> for <code>step</code> and <code>update</code> calls.</p>
+<h2 id="parameters">Parameters</h2>
+<p>**kwargs:
+arbitrary keyword arguments that will be passed to the <code>initialize</code> function</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BaseAgent(metaclass=ABCMeta):
+    def __init__(self, **kwargs):
+        &#34;&#34;&#34;
+        By default, the agent will be in `train` mode and be configured to use 
+        the `cpu` for `step` and `update` calls.
+
+        Parameters
+        ----------
+        **kwargs:
+            arbitrary keyword arguments that will be passed to the `initialize` function
+        &#34;&#34;&#34;
+        self.mode = &#39;train&#39;
+        self.device = &#39;cpu&#39;
+        self.nets = {}  # Instantiate this in the initialize function.
+        self.initialize(**kwargs)
+
+    @abstractmethod
+    def initialize(self) -&gt; None:
+        &#34;&#34;&#34;
+        Perform agent initialization. This could include setting class variables 
+        for agent optimizers, agent networks, and other important values. 
+        Override this method when extending the `BaseAgent` class.
+
+        Make sure to add all the agent networks to a `self.nets` class variable 
+        in a dictionary format, where the key is a string containing the network 
+        name and the value is the network instance (an extension of the 
+        `nets.base_net.BaseNetwork` class). The `self.nets` class variable will 
+        become important when we `save` and `load` network weights.
+
+        Parameters
+        ----------
+        **kwargs:
+            arbitrary keyword arguments
+        &#34;&#34;&#34;
+        pass
+
+    @abstractmethod
+    @torch.no_grad()
+    def step(self, state: torch.Tensor) -&gt; np.ndarray:
+        &#34;&#34;&#34;
+        Have the agent take an action in the environment. Override this method 
+        when extending the `BaseAgent` class, and be sure to apply the 
+        `torch.no_grad()` decorator.
+
+        Parameters
+        ----------
+        state: torch.Tensor
+            batch of environment state vectors, which will be of shape 
+            (batch_size, state_shape)
+
+        Returns
+        -------
+        np.ndarray:
+            batch of selected actions, which will be of shape 
+            (batch_size, action_shape)
+        &#34;&#34;&#34;
+        pass
+
+    @abstractmethod
+    def update(self, batch: Dict[str, torch.Tensor]) -&gt; Dict[str, float]:
+        &#34;&#34;&#34;
+        Update the agent policy according to a batch of transitions. Override 
+        this method when extending the `BaseAgent` class.
+
+        Parameters
+        ----------
+        batch: Dict[str, torch.Tensor]
+            batch of transitions. Keys for the dictionary at a minimum will 
+            include `states` and `actions`, but may also include `rewards` and 
+            other values needed for the policy update
+
+        Returns
+        -------
+        Dict[str, float]:
+            losses for the update step, key strings and loss values can be 
+            automatically recorded to TensorBoard (see 
+            `algos.BaseAlgorithm.log`) function for more details
+        &#34;&#34;&#34;
+        pass
+
+    def save(self, save_path: str, step: int, keep: int = 3) -&gt; None:
+        &#34;&#34;&#34;
+        Save the agent network(s) weights, according to `self.nets`. All 
+        networks listed in the `nets` attribute are saved according to the 
+        network name (key in the `nets` attribute dictionary) and training 
+        step: `&lt;save_path&gt;/&lt;net_name&gt;_&lt;step&gt;.pth`.
+
+        We keep only the `keep` most recent iterations of the network weights.
+
+        Parameters
+        ----------
+        save_path: str
+            path to directory to save the network weights
+        step: int
+            current training step
+        keep: int, default = 3
+            number of most recent network weights to keep
+        &#34;&#34;&#34;
+        if self.nets:
+            for (name, net) in self.nets.items():
+                dst = os.path.join(save_path, &#39;%s_%i.pth&#39; % (name, step))
+                torch.save(net.state_dict(), dst)
+
+            # Remove old files
+            num_keep = keep * len(self.nets)
+            weight_files = glob(os.path.join(save_path, &#34;*.pth&#34;))
+            old_weight_files = sorted(weight_files, key=os.path.getctime)[
+                :-num_keep
+            ]
+            for f in old_weight_files:
+                os.remove(f)
+
+    def load(self, load_path: str, save_num=-1) -&gt; None:
+        &#34;&#34;&#34;
+        Load the agent network(s) weights. Will load the most recent network 
+        weight(s) from the `load_path` according to file creation time. Expects 
+        weights in `*.pth` format.
+
+        Parameters
+        ----------
+        load_path: str
+            path to directory with network weights
+        save_num: int
+            number corresponding to a saved model. If -1, use most recent
+        &#34;&#34;&#34;
+
+        path_str = (
+            &#39;%s*.pth&#39; if save_num == -1 else &#39;%s_&#39; + str(save_num) + &#39;.pth&#39;
+        )
+
+        for (name, net) in self.nets.items():
+            weight_files = glob(os.path.join(load_path, path_str % name))
+            if len(weight_files) == 0:
+                logging.error(&#39;Could not load weights from %s.&#39; % load_path)
+                exit()
+            most_recent_weights = sorted(weight_files, key=os.path.getctime)[
+                -1
+            ]
+            net.load_state_dict(torch.load(most_recent_weights))
+            logging.info(&#34;Loaded %s.&#34; % most_recent_weights)
+
+    def to_gpu(self) -&gt; None:
+        &#34;&#34;&#34;
+        Place agent `self.nets` on the GPU.
+        &#34;&#34;&#34;
+        self.device = &#39;gpu&#39;
+        for (name, net) in self.nets.items():
+            net = net.cuda()
+
+    def to_cpu(self) -&gt; None:
+        &#34;&#34;&#34;
+        Place agent `self.nets` on the CPU.
+        &#34;&#34;&#34;
+        self.device = &#39;cpu&#39;
+        for (name, net) in self.nets.items():
+            net = net.cpu()
+
+    def set_train(self) -&gt; None:
+        &#34;&#34;&#34;
+        Set agent `self.nets` to training mode.
+        &#34;&#34;&#34;
+        self.mode = &#39;train&#39;
+        for (name, net) in self.nets.items():
+            net = net.train()
+
+    def set_test(self) -&gt; None:
+        &#34;&#34;&#34;
+        Set agent `self.nets` to evaluation mode.
+        &#34;&#34;&#34;
+        self.mode = &#39;test&#39;
+        for (name, net) in self.nets.items():
+            net = net.eval()</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="ilpyt.agents.a2c_agent.A2CAgent" href="a2c_agent.html#ilpyt.agents.a2c_agent.A2CAgent">A2CAgent</a></li>
+<li><a title="ilpyt.agents.dqn_agent.DQNAgent" href="dqn_agent.html#ilpyt.agents.dqn_agent.DQNAgent">DQNAgent</a></li>
+<li><a title="ilpyt.agents.gail_agent.GAILAgent" href="gail_agent.html#ilpyt.agents.gail_agent.GAILAgent">GAILAgent</a></li>
+<li><a title="ilpyt.agents.gcl_agent.GCLAgent" href="gcl_agent.html#ilpyt.agents.gcl_agent.GCLAgent">GCLAgent</a></li>
+<li><a title="ilpyt.agents.heuristic_agent.CartPoleHeuristicAgent" href="heuristic_agent.html#ilpyt.agents.heuristic_agent.CartPoleHeuristicAgent">CartPoleHeuristicAgent</a></li>
+<li><a title="ilpyt.agents.heuristic_agent.LunarLanderContinuousHeuristicAgent" href="heuristic_agent.html#ilpyt.agents.heuristic_agent.LunarLanderContinuousHeuristicAgent">LunarLanderContinuousHeuristicAgent</a></li>
+<li><a title="ilpyt.agents.heuristic_agent.LunarLanderHeuristicAgent" href="heuristic_agent.html#ilpyt.agents.heuristic_agent.LunarLanderHeuristicAgent">LunarLanderHeuristicAgent</a></li>
+<li><a title="ilpyt.agents.heuristic_agent.MountainCarContinuousHeuristicAgent" href="heuristic_agent.html#ilpyt.agents.heuristic_agent.MountainCarContinuousHeuristicAgent">MountainCarContinuousHeuristicAgent</a></li>
+<li><a title="ilpyt.agents.heuristic_agent.MountainCarHeuristicAgent" href="heuristic_agent.html#ilpyt.agents.heuristic_agent.MountainCarHeuristicAgent">MountainCarHeuristicAgent</a></li>
+<li><a title="ilpyt.agents.imitation_agent.ImitationAgent" href="imitation_agent.html#ilpyt.agents.imitation_agent.ImitationAgent">ImitationAgent</a></li>
+<li><a title="ilpyt.agents.ppo_agent.PPOAgent" href="ppo_agent.html#ilpyt.agents.ppo_agent.PPOAgent">PPOAgent</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ilpyt.agents.base_agent.BaseAgent.initialize"><code class="name flex">
+<span>def <span class="ident">initialize</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Perform agent initialization. This could include setting class variables
+for agent optimizers, agent networks, and other important values.
+Override this method when extending the <code><a title="ilpyt.agents.base_agent.BaseAgent" href="#ilpyt.agents.base_agent.BaseAgent">BaseAgent</a></code> class.</p>
+<p>Make sure to add all the agent networks to a <code>self.nets</code> class variable
+in a dictionary format, where the key is a string containing the network
+name and the value is the network instance (an extension of the
+<code>nets.base_net.BaseNetwork</code> class). The <code>self.nets</code> class variable will
+become important when we <code>save</code> and <code>load</code> network weights.</p>
+<h2 id="parameters">Parameters</h2>
+<p>**kwargs:
+arbitrary keyword arguments</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+def initialize(self) -&gt; None:
+    &#34;&#34;&#34;
+    Perform agent initialization. This could include setting class variables 
+    for agent optimizers, agent networks, and other important values. 
+    Override this method when extending the `BaseAgent` class.
+
+    Make sure to add all the agent networks to a `self.nets` class variable 
+    in a dictionary format, where the key is a string containing the network 
+    name and the value is the network instance (an extension of the 
+    `nets.base_net.BaseNetwork` class). The `self.nets` class variable will 
+    become important when we `save` and `load` network weights.
+
+    Parameters
+    ----------
+    **kwargs:
+        arbitrary keyword arguments
+    &#34;&#34;&#34;
+    pass</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.agents.base_agent.BaseAgent.load"><code class="name flex">
+<span>def <span class="ident">load</span></span>(<span>self, load_path: str, save_num=-1) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Load the agent network(s) weights. Will load the most recent network
+weight(s) from the <code>load_path</code> according to file creation time. Expects
+weights in <code>*.pth</code> format.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>load_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to directory with network weights</dd>
+<dt><strong><code>save_num</code></strong> :&ensp;<code>int</code></dt>
+<dd>number corresponding to a saved model. If -1, use most recent</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load(self, load_path: str, save_num=-1) -&gt; None:
+    &#34;&#34;&#34;
+    Load the agent network(s) weights. Will load the most recent network 
+    weight(s) from the `load_path` according to file creation time. Expects 
+    weights in `*.pth` format.
+
+    Parameters
+    ----------
+    load_path: str
+        path to directory with network weights
+    save_num: int
+        number corresponding to a saved model. If -1, use most recent
+    &#34;&#34;&#34;
+
+    path_str = (
+        &#39;%s*.pth&#39; if save_num == -1 else &#39;%s_&#39; + str(save_num) + &#39;.pth&#39;
+    )
+
+    for (name, net) in self.nets.items():
+        weight_files = glob(os.path.join(load_path, path_str % name))
+        if len(weight_files) == 0:
+            logging.error(&#39;Could not load weights from %s.&#39; % load_path)
+            exit()
+        most_recent_weights = sorted(weight_files, key=os.path.getctime)[
+            -1
+        ]
+        net.load_state_dict(torch.load(most_recent_weights))
+        logging.info(&#34;Loaded %s.&#34; % most_recent_weights)</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.agents.base_agent.BaseAgent.save"><code class="name flex">
+<span>def <span class="ident">save</span></span>(<span>self, save_path: str, step: int, keep: int = 3) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Save the agent network(s) weights, according to <code>self.nets</code>. All
+networks listed in the <code>nets</code> attribute are saved according to the
+network name (key in the <code>nets</code> attribute dictionary) and training
+step: <code>&lt;save_path&gt;/&lt;net_name&gt;_&lt;step&gt;.pth</code>.</p>
+<p>We keep only the <code>keep</code> most recent iterations of the network weights.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>save_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to directory to save the network weights</dd>
+<dt><strong><code>step</code></strong> :&ensp;<code>int</code></dt>
+<dd>current training step</dd>
+<dt><strong><code>keep</code></strong> :&ensp;<code>int</code>, default <code>= 3</code></dt>
+<dd>number of most recent network weights to keep</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save(self, save_path: str, step: int, keep: int = 3) -&gt; None:
+    &#34;&#34;&#34;
+    Save the agent network(s) weights, according to `self.nets`. All 
+    networks listed in the `nets` attribute are saved according to the 
+    network name (key in the `nets` attribute dictionary) and training 
+    step: `&lt;save_path&gt;/&lt;net_name&gt;_&lt;step&gt;.pth`.
+
+    We keep only the `keep` most recent iterations of the network weights.
+
+    Parameters
+    ----------
+    save_path: str
+        path to directory to save the network weights
+    step: int
+        current training step
+    keep: int, default = 3
+        number of most recent network weights to keep
+    &#34;&#34;&#34;
+    if self.nets:
+        for (name, net) in self.nets.items():
+            dst = os.path.join(save_path, &#39;%s_%i.pth&#39; % (name, step))
+            torch.save(net.state_dict(), dst)
+
+        # Remove old files
+        num_keep = keep * len(self.nets)
+        weight_files = glob(os.path.join(save_path, &#34;*.pth&#34;))
+        old_weight_files = sorted(weight_files, key=os.path.getctime)[
+            :-num_keep
+        ]
+        for f in old_weight_files:
+            os.remove(f)</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.agents.base_agent.BaseAgent.set_test"><code class="name flex">
+<span>def <span class="ident">set_test</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set agent <code>self.nets</code> to evaluation mode.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_test(self) -&gt; None:
+    &#34;&#34;&#34;
+    Set agent `self.nets` to evaluation mode.
+    &#34;&#34;&#34;
+    self.mode = &#39;test&#39;
+    for (name, net) in self.nets.items():
+        net = net.eval()</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.agents.base_agent.BaseAgent.set_train"><code class="name flex">
+<span>def <span class="ident">set_train</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set agent <code>self.nets</code> to training mode.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_train(self) -&gt; None:
+    &#34;&#34;&#34;
+    Set agent `self.nets` to training mode.
+    &#34;&#34;&#34;
+    self.mode = &#39;train&#39;
+    for (name, net) in self.nets.items():
+        net = net.train()</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.agents.base_agent.BaseAgent.step"><code class="name flex">
+<span>def <span class="ident">step</span></span>(<span>self, state: torch.Tensor) ‑> numpy.ndarray</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Have the agent take an action in the environment. Override this method
+when extending the <code><a title="ilpyt.agents.base_agent.BaseAgent" href="#ilpyt.agents.base_agent.BaseAgent">BaseAgent</a></code> class, and be sure to apply the
+<code>torch.no_grad()</code> decorator.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>state</code></strong> :&ensp;<code>torch.Tensor</code></dt>
+<dd>batch of environment state vectors, which will be of shape
+(batch_size, state_shape)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>np.ndarray:</code></dt>
+<dd>batch of selected actions, which will be of shape
+(batch_size, action_shape)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+@torch.no_grad()
+def step(self, state: torch.Tensor) -&gt; np.ndarray:
+    &#34;&#34;&#34;
+    Have the agent take an action in the environment. Override this method 
+    when extending the `BaseAgent` class, and be sure to apply the 
+    `torch.no_grad()` decorator.
+
+    Parameters
+    ----------
+    state: torch.Tensor
+        batch of environment state vectors, which will be of shape 
+        (batch_size, state_shape)
+
+    Returns
+    -------
+    np.ndarray:
+        batch of selected actions, which will be of shape 
+        (batch_size, action_shape)
+    &#34;&#34;&#34;
+    pass</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.agents.base_agent.BaseAgent.to_cpu"><code class="name flex">
+<span>def <span class="ident">to_cpu</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Place agent <code>self.nets</code> on the CPU.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_cpu(self) -&gt; None:
+    &#34;&#34;&#34;
+    Place agent `self.nets` on the CPU.
+    &#34;&#34;&#34;
+    self.device = &#39;cpu&#39;
+    for (name, net) in self.nets.items():
+        net = net.cpu()</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.agents.base_agent.BaseAgent.to_gpu"><code class="name flex">
+<span>def <span class="ident">to_gpu</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Place agent <code>self.nets</code> on the GPU.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_gpu(self) -&gt; None:
+    &#34;&#34;&#34;
+    Place agent `self.nets` on the GPU.
+    &#34;&#34;&#34;
+    self.device = &#39;gpu&#39;
+    for (name, net) in self.nets.items():
+        net = net.cuda()</code></pre>
+</details>
+</dd>
+<dt id="ilpyt.agents.base_agent.BaseAgent.update"><code class="name flex">
+<span>def <span class="ident">update</span></span>(<span>self, batch: Dict[str, torch.Tensor]) ‑> Dict[str, float]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Update the agent policy according to a batch of transitions. Override
+this method when extending the <code><a title="ilpyt.agents.base_agent.BaseAgent" href="#ilpyt.agents.base_agent.BaseAgent">BaseAgent</a></code> class.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>batch</code></strong> :&ensp;<code>Dict[str, torch.Tensor]</code></dt>
+<dd>batch of transitions. Keys for the dictionary at a minimum will
+include <code>states</code> and <code>actions</code>, but may also include <code>rewards</code> and
+other values needed for the policy update</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Dict[str, float]:</code></dt>
+<dd>losses for the update step, key strings and loss values can be
+automatically recorded to TensorBoard (see
+<code>algos.BaseAlgorithm.log</code>) function for more details</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+def update(self, batch: Dict[str, torch.Tensor]) -&gt; Dict[str, float]:
+    &#34;&#34;&#34;
+    Update the agent policy according to a batch of transitions. Override 
+    this method when extending the `BaseAgent` class.
+
+    Parameters
+    ----------
+    batch: Dict[str, torch.Tensor]
+        batch of transitions. Keys for the dictionary at a minimum will 
+        include `states` and `actions`, but may also include `rewards` and 
+        other values needed for the policy update
+
+    Returns
+    -------
+    Dict[str, float]:
+        losses for the update step, key strings and loss values can be 
+        automatically recorded to TensorBoard (see 
+        `algos.BaseAlgorithm.log`) function for more details
+    &#34;&#34;&#34;
+    pass</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ilpyt.agents" href="index.html">ilpyt.agents</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ilpyt.agents.base_agent.BaseAgent" href="#ilpyt.agents.base_agent.BaseAgent">BaseAgent</a></code></h4>
+<ul class="two-column">
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.initialize" href="#ilpyt.agents.base_agent.BaseAgent.initialize">initialize</a></code></li>
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.load" href="#ilpyt.agents.base_agent.BaseAgent.load">load</a></code></li>
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.save" href="#ilpyt.agents.base_agent.BaseAgent.save">save</a></code></li>
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.set_test" href="#ilpyt.agents.base_agent.BaseAgent.set_test">set_test</a></code></li>
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.set_train" href="#ilpyt.agents.base_agent.BaseAgent.set_train">set_train</a></code></li>
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.step" href="#ilpyt.agents.base_agent.BaseAgent.step">step</a></code></li>
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.to_cpu" href="#ilpyt.agents.base_agent.BaseAgent.to_cpu">to_cpu</a></code></li>
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.to_gpu" href="#ilpyt.agents.base_agent.BaseAgent.to_gpu">to_gpu</a></code></li>
+<li><code><a title="ilpyt.agents.base_agent.BaseAgent.update" href="#ilpyt.agents.base_agent.BaseAgent.update">update</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
