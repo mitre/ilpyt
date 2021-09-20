@@ -52,6 +52,9 @@ Install `ilpyt` using pip:
 
 ```
 pip3 install ilpyt
+
+# Or to install from source:
+# pip3 install -e .
 ```
 **STEP 3** (Optional) 
 

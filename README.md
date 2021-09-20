@@ -40,6 +40,9 @@ Note: `ilpyt` has only been tested on Ubuntu 20.04, and with Python 3.8.5.
 2. Install `ilpyt` using pip:
   ```sh
   pip3 install ilpyt
+
+  # Or to install from source:
+  # pip3 install -e .
   ```
 3. (Optional) Run the associated Python tests to confirm the package has installed successfully: 
   ```sh
