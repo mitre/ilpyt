@@ -5,7 +5,7 @@ The imitation learning toolbox (`ilpyt`) contains modular implementations of
 common deep imitation learning algorithms in PyTorch, with unified 
 infrastructure supporting key imitation learning and reinforcement learning 
 algorithms. You can read more about `ilpyt` in our 
-[white paper](https://github.com/mitre/ilpyt/docs/ilpyt_white_paper.pdf).
+[white paper](https://github.com/mitre/ilpyt/blob/main/docs/ilpyt_white_paper.pdf).
 
 Documentation is available [here](https://mitre.github.io/ilpyt).
 
@@ -179,12 +179,12 @@ A2C (Mean/Std) |  - |  | - | 201.26 / 62.52 |   - |
 PPO (Mean/Std) |  - | - | -  | 249.72 / 75.05 | -  |
 
 The pre-trained weights for these models can be found in our 
-[Model Zoo](https://github.com/mitre/ilpyt/model_zoo).
+[Model Zoo](https://github.com/mitre/ilpyt/tree/main/model_zoo).
 
 ## Citation
 
 If you use `ilpyt` for your work, please cite our 
-[white paper](https://github.com/mitre/ilpyt/docs/ilpyt_white_paper.pdf):
+[white paper](https://github.com/mitre/ilpyt/blob/main/docs/ilpyt_white_paper.pdf):
 ```
 @misc{ilpyt_2021,
   author = {Vu, Amanda and Tapley, Alex and Bissey, Brett},
