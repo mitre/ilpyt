@@ -22,7 +22,7 @@ def seed(request):
     return request.param
 
 
-@pytest.fixture(scope="session", params=['dummy'])
+@pytest.fixture(scope="session", params=['dummy', 'subproc'])
 def vecenv_type(request):
     return request.param
 

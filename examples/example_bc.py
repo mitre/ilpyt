@@ -66,6 +66,8 @@ def evaluate_baselines():
             num_env=16,
             use_gpu=True,
         )
+        
+        algo.env.close()
 
         algo.test(num_episodes=100)
 
@@ -86,7 +88,7 @@ if __name__ == '__main__':
 
     if not os.path.exists('logs/BC'):
         os.makedirs('logs/BC')
-
+    evaluate_baselines()
     # LunarLander-v2 -----------------------------------------------------------
 
     save_path = 'logs/BC/LunarLander-v2'
@@ -107,6 +109,9 @@ if __name__ == '__main__':
         batch_size=20,
         expert_demos='demos/LunarLander-v2/demos.pkl',
     )
+    # Close training environmnet
+    algo.env.close()
+
     # Load
     algo.agent.load(save_path)
 
@@ -133,6 +138,9 @@ if __name__ == '__main__':
         batch_size=20,
         expert_demos='demos/CartPole-v0/demos.pkl',
     )
+    # Close training environmnet
+    algo.env.close()
+
     # Load
     algo.agent.load(save_path)
 
@@ -159,6 +167,9 @@ if __name__ == '__main__':
         batch_size=20,
         expert_demos='demos/MountainCar-v0/demos.pkl',
     )
+    # Close training environmnet
+    algo.env.close()
+
     # Load
     algo.agent.load(save_path)
 
@@ -185,6 +196,9 @@ if __name__ == '__main__':
         batch_size=20,
         expert_demos='demos/MountainCarContinuous-v0/demos.pkl',
     )
+    # Close training environmnet
+    algo.env.close()
+
     # Load
     algo.agent.load(save_path)
 
@@ -211,6 +225,9 @@ if __name__ == '__main__':
         batch_size=20,
         expert_demos='demos/LunarLanderContinuous-v0/demos.pkl',
     )
+    # Close training environmnet
+    algo.env.close()
+
     # Load
     algo.agent.load(save_path)
 

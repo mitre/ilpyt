@@ -87,6 +87,9 @@ def worker(remote, parent_remote, env_fn_wrappers):
                         )
                     )
                 )
+            elif cmd == 'seed':
+                for env in envs:
+                    env.seed(data)
             else:
                 raise NotImplementedError
     except KeyboardInterrupt:
@@ -163,6 +166,11 @@ class SubprocVecEnv(VecEnv):
         obs, rews, dones, infos = zip(*results)
         return _flatten_obs(obs), np.stack(rews), np.stack(dones), infos
 
+    def seed(self, seed_n):
+        self._assert_not_closed()
+        for remote in self.remotes:
+            remote.send(('seed', seed_n))
+    
     def reset(self):
         self._assert_not_closed()
         for remote in self.remotes:

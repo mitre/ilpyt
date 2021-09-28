@@ -76,6 +76,8 @@ def evaluate_baselines():
             num_env=16,
             use_gpu=True,
         )
+        
+        algo.env.close()
 
         algo.test(num_episodes=100)
 
@@ -116,6 +118,8 @@ if __name__ == '__main__':
         num_episodes=10000,
         expert_demos='/mnt/IMLEARN/demos/LunarLander-v2/demos.pkl',
     )
+    # Close training environmnet
+    algo.env.close()
 
     # Load
     algo.agent.load(save_path)
@@ -142,6 +146,8 @@ if __name__ == '__main__':
         num_episodes=10000,
         expert_demos='demos/CartPole-v0/demos.pkl',
     )
+    # Close training environmnet
+    algo.env.close()
 
     # Load
     algo.agent.load(save_path)
@@ -168,6 +174,8 @@ if __name__ == '__main__':
         num_episodes=10000,
         expert_demos='/mnt/IMLEARN/demos/LunarLanderContinuous-v2/demos.pkl',
     )
+    # Close environment
+    algo.env.close()
 
     # Load
     algo.agent.load(save_path)

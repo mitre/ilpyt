@@ -125,4 +125,3 @@ class BC(BaseAlgorithm):
                     % (epoch, loss)
                 )
 
-        self.env.close()

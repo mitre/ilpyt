@@ -117,4 +117,3 @@ class RL(BaseAlgorithm):
                     % (ep_count, reward)
                 )
 
-        self.env.close()

@@ -148,4 +148,3 @@ class GAIL(BaseAlgorithm):
 
         self.agent.save(self.save_path, ep_count, keep=num_save)
         logging.info("Save final model at episode %i:%i." % (ep_count, step))
-        self.env.close()

@@ -4,7 +4,6 @@ transitions (state, action, reward, next state) over specified intervals of
 time.  We can have the runner generate a collection of transitions for us by 
 calling `generate_batch` and `generate_episodes`. 
 """
-
 from typing import Any, Dict, List
 
 import numpy as np
@@ -12,6 +11,7 @@ import torch
 
 from ilpyt.agents.base_agent import BaseAgent
 from ilpyt.envs.vec_env import VecEnv
+from ilpyt.envs.subproc_vec_env import SubprocVecEnv
 from ilpyt.utils.seed_utils import set_seed
 
 
@@ -323,6 +323,9 @@ class Runner:
             {'states': [], 'actions': [], 'rewards': [], 'dones': []}
         """
         # Initialize batch
+        if isinstance(self.env, SubprocVecEnv):
+            return self.generate_test_episodes_subproc(num_episodes, start_seed)
+
         eps = Experiences()
 
         test_env = self.env.envs[0]
@@ -360,6 +363,87 @@ class Runner:
                 set_seed(start_seed * (ep_count + 1))
                 test_state = torch.tensor(
                     test_env.reset().copy(), dtype=torch.float
+                ).unsqueeze(0)
+            else:
+                # Update state
+                test_state = torch.tensor(
+                    next_state.copy(), dtype=torch.float
+                ).unsqueeze(0)
+
+            if self.use_gpu:
+                test_state = test_state.cuda()
+
+        eps.to_torch()
+        if self.use_gpu:
+            eps.to_gpu()
+
+        return eps
+
+    @torch.no_grad()
+    def generate_test_episodes_subproc(
+        self, num_episodes: int, start_seed=24
+    ) -> Experiences:
+        """
+        Generate episodes using a single env with seeds for reproducibility.
+        Only records states, actions, rewards.
+
+        Will return a list of torch Tensors.
+
+        Parameters
+        ----------
+        num_episodes: int
+            number of episodes to collectively acquire across all of the
+            environment threads
+
+        Returns
+        -------
+        Experiences (Dict[str, torch.Tensor]]):
+            {'states': [], 'actions': [], 'rewards': [], 'dones': []}
+        """
+        # Initialize batch
+        eps = Experiences()
+        ep_count = 0
+        self.env.seed(start_seed * (ep_count + 1))
+        
+        set_seed(start_seed * (ep_count + 1))
+        initial_obs = self.state[0]
+
+        test_state = torch.tensor(
+            initial_obs, dtype=torch.float
+        ).unsqueeze(0)
+
+        print(test_state)
+        if self.use_gpu:
+            test_state = test_state.cuda()
+
+        while ep_count < num_episodes:
+
+            # Agent takes action
+            action = self.agent.step(test_state)
+
+            # Update environment
+
+            next_state, reward, done, info = self.env.step([action[0]] * self.env.num_envs)
+            next_state = next_state[0]
+            reward = reward[0]
+            done = done[0]
+            info = info[0]
+            # Record transition to batch
+            # On episode end, update batch infos and reset
+            eps.add(
+                torch.as_tensor(test_state.squeeze()),
+                torch.as_tensor(action.squeeze()),
+                torch.as_tensor(reward),
+                torch.as_tensor(done),
+            )
+
+            if done:
+                ep_count += 1
+                self.env.seed(start_seed * (ep_count + 1))
+                set_seed(start_seed * (ep_count + 1))
+                self.reset()
+                test_state = torch.tensor(
+                    self.state[0], dtype=torch.float
                 ).unsqueeze(0)
             else:
                 # Update state

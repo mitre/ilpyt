@@ -69,6 +69,8 @@ def evaluate_baselines():
             use_gpu=True,
         )
 
+        algo.env.close()
+
         algo.test(num_episodes=100)
 
 
@@ -111,6 +113,8 @@ if __name__ == '__main__':
         batch_size=32,
         T_steps=20,
     )
+    # Close training environmnet
+    algo.env.close()
 
     # Load
     algo.agent.load(save_path)
@@ -140,6 +144,8 @@ if __name__ == '__main__':
         batch_size=20,
         T_steps=20,
     )
+    # Close training environmnet
+    algo.env.close()
 
     # Load
     algo.agent.load(save_path)
@@ -169,6 +175,8 @@ if __name__ == '__main__':
         batch_size=20,
         T_steps=20,
     )
+    # Close training environmnet
+    algo.env.close()
 
     # Load
     algo.agent.load(save_path)
@@ -198,6 +206,8 @@ if __name__ == '__main__':
         batch_size=20,
         T_steps=20,
     )
+    # Close training environmnet
+    algo.env.close()
 
     # Load
     algo.agent.load(save_path)
@@ -227,6 +237,8 @@ if __name__ == '__main__':
         batch_size=20,
         T_steps=20,
     )
+    # Close training environmnet
+    algo.env.close()
 
     # Load
     algo.agent.load(save_path)

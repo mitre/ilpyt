@@ -162,4 +162,3 @@ class GCL(BaseAlgorithm):
                     % (i, loss)
                 )
 
-        self.env.close()

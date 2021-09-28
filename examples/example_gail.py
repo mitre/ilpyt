@@ -83,6 +83,8 @@ def evaluate_baselines():
             use_gpu=True,
         )
 
+        algo.env.close()
+
         algo.test(num_episodes=100)
 
 
@@ -124,6 +126,8 @@ if __name__ == '__main__':
         expert_demos='demos/LunarLander-v2/demos.pkl',
         save_interval=1000,
     )
+    # Close training environmnet
+    algo.env.close()
 
     # Load
     algo.agent.load(save_path)
@@ -152,6 +156,8 @@ if __name__ == '__main__':
         expert_demos='demos/LunarLanderContinuous-v2/demos.pkl',
         save_interval=1000,
     )
+    # Close training environmnet
+    algo.env.close()
 
     # Load
     algo.agent.load(save_path)
@@ -206,6 +212,8 @@ if __name__ == '__main__':
         rollout_steps=64,
         expert_demos='demos/MoutainCar-v0/demos.pkl',
     )
+    # Close training environmnet
+    algo.env.close()
 
     # Load
     algo.agent.load(save_path)
@@ -233,6 +241,8 @@ if __name__ == '__main__':
         rollout_steps=64,
         expert_demos='demos/MountainCarContinuous-v0/demos.pkl',
     )
+    # Close training environmnet
+    algo.env.close()
 
     # Load
     algo.agent.load(save_path)

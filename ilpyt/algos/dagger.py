@@ -268,4 +268,3 @@ class DAgger(BaseAlgorithm):
             'Best Model Reward: Loss %0.4f, Reward %0.3f'
             % (self.best_reward_loss, self.best_reward)
         )
-        self.env.close()

@@ -386,5 +386,3 @@ class Apprentice(BaseAlgorithm):
             feature_expectations.append(agent_fe)
 
             self.agent.save(self.save_path, episode, keep=num_episodes)
-
-        self.env.close()
