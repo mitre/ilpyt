@@ -143,9 +143,8 @@ class Apprentice(BaseAlgorithm):
         -------
         torch.Tensor: rewards vector
         """
-
-        rewards = torch.matmul(torch.sigmoid(observations), weights)
-
+        rewards = torch.matmul(torch.sigmoid(observations.float()), weights.float())
+        
         return rewards
 
     def initialize_step(self, gamma: float) -> Tuple[List, List, List, List]:

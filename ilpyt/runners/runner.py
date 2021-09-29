@@ -188,7 +188,6 @@ class Runner:
 
             # Update environment
             next_state, reward, done, info = self.env.step(action)
-            # print('REWARD IN RUNNER:' , reward)
             # Record transition to batch
             batch['states'][step] = torch.as_tensor(self.state)
             batch['next_states'][step] = torch.as_tensor(next_state)
@@ -216,7 +215,7 @@ class Runner:
                     self.episode_stats['length'][i] = 0
 
             # Update state
-            self.state = torch.tensor(next_state)
+            self.state = torch.FloatTensor(next_state)
             if self.use_gpu:
                 self.state = self.state.cuda()
 
@@ -275,14 +274,17 @@ class Runner:
                 # On episode end, move from buffer to result_dict
                 if done[i]:
                     all_episodes.append(eps_by_env[i])
-                    next_state[i] = self.env.envs[i].reset()
+                    if isinstance(self.env, SubprocVecEnv):
+                        next_state[i] = self.env.reset_one(i)
+                    else:
+                        next_state[i] = self.env.envs[i].reset()
                     eps_by_env[i] = Experiences()
                     ep_count += 1
                     if ep_count >= num_episodes:
                         break
 
             # Update state
-            self.state = torch.tensor(next_state)
+            self.state = torch.FloatTensor(next_state)
             if self.use_gpu:
                 self.state = self.state.cuda()
 
@@ -412,7 +414,6 @@ class Runner:
             initial_obs, dtype=torch.float
         ).unsqueeze(0)
 
-        print(test_state)
         if self.use_gpu:
             test_state = test_state.cuda()
 
@@ -431,10 +432,10 @@ class Runner:
             # Record transition to batch
             # On episode end, update batch infos and reset
             eps.add(
-                torch.as_tensor(test_state.squeeze()),
-                torch.as_tensor(action.squeeze()),
-                torch.as_tensor(reward),
-                torch.as_tensor(done),
+                torch.as_tensor(test_state.squeeze(), dtype=torch.float),
+                torch.as_tensor(action.squeeze(), dtype=torch.float),
+                torch.as_tensor(reward, dtype=torch.float),
+                torch.as_tensor(done, dtype=torch.float),
             )
 
             if done:

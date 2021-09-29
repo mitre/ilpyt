@@ -71,7 +71,10 @@ def worker(remote, parent_remote, env_fn_wrappers):
                     [step_env(env, action) for env, action in zip(envs, data)]
                 )
             elif cmd == 'reset':
-                remote.send([env.reset() for env in envs])
+                if data is not None:
+                    remote.send([envs[data].reset()])
+                else:
+                    remote.send([env.reset() for env in envs])
             elif cmd == 'render':
                 remote.send([env.render(mode='rgb_array') for env in envs])
             elif cmd == 'close':
@@ -176,6 +179,16 @@ class SubprocVecEnv(VecEnv):
         for remote in self.remotes:
             remote.send(('reset', None))
         obs = [remote.recv() for remote in self.remotes]
+        obs = _flatten_list(obs)
+        return _flatten_obs(obs)
+
+    def reset_one(self, env_x):
+        self._assert_not_closed()
+
+        remote_to_grab = (env_x // self.in_series)
+        env_from_remote = env_x % self.in_series
+        self.remotes[remote_to_grab].send(('reset', env_from_remote))
+        obs = [self.remotes[remote_to_grab].recv()]
         obs = _flatten_list(obs)
         return _flatten_obs(obs)
 
